@@ -24,7 +24,7 @@
                     <a [routerLink]="['/projeto/edit/', emp.id]">
                       <i class="material-icons">edit</i>
                     </a>
-                    <a (click)="delete(emp.id)">
+                    <a (click)="delete(emp.id)" *ngIf="ativoprazo">
                         <i class="material-icons">delete</i>
                     </a>
                 </th>

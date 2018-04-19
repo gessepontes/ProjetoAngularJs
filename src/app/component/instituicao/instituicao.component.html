@@ -180,7 +180,7 @@
                 <a (click)="download(emp.id,emp.sNome)">
                   <i class="material-icons">cloud_download</i>
                 </a>
-                <a (click)="delete(emp.id)">
+                <a (click)="delete(emp.id)" *ngIf="ativoprazo">
                   <i class="material-icons">delete</i>
                 </a>
               </th>
@@ -207,7 +207,7 @@
     </div>
 
     <div class="row">
-      <div class="input-field col s12">
+      <div class="input-field col s12" *ngIf="ativoprazo">
         <a class="btn" (click)="save()" [attr.disabled]="!instituicaoForm.valid?'':null">Salvar</a>
         <a class="btn" *ngIf="!ativo" (click)="back()">Voltar</a>
       </div>

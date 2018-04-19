@@ -8,6 +8,7 @@ import { ProjetoService } from '../../../service/projeto/projeto.service'
 import { MensagemService } from '../../../service/mensagem/mensagem.service';
 import { ArquivoProjetoService } from '../../../service/arquivoprojeto/arquivoprojeto.service'
 import { saveAs } from 'file-saver';
+import { AuthService } from '../../../service/auth/auth.service';
 
 @Component({
   selector: 'projeto',
@@ -71,13 +72,15 @@ export class ProjetoComponent implements OnInit {
 
   // TODO: Remove this when we're done
   get diagnostic() { return JSON.stringify(this.projetoForm.value); }
+  ativoprazo: boolean = false;
 
   constructor(private _fb: FormBuilder, private _avRoute: ActivatedRoute, private _cidadeService: CidadeService,
-    private alertService: MensagemService, private _arquivoProjetoService: ArquivoProjetoService,
+    private alertService: MensagemService, private _arquivoProjetoService: ArquivoProjetoService,private authenticationService: AuthService,
     private _projetoService: ProjetoService, private router: Router) {
     
     if (this._avRoute.snapshot.params["id"]) {
        this.id = this._avRoute.snapshot.params["id"];
+       this.prazo();
     }else{
       this.id = 0;
     }
@@ -257,5 +260,18 @@ export class ProjetoComponent implements OnInit {
           }
         }, error => this.alertService.error(error));
     }
+  }
+
+
+  prazo(){
+    this.authenticationService.prazo().subscribe(
+      data => {
+        if (data) {
+          this.ativoprazo = true;
+        } 
+      },
+      error => {
+        this.alertService.error("Erro ao realizar a operação!");
+      });
   }
 }

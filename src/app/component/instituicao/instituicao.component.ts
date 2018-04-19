@@ -29,6 +29,7 @@ export class InstituicaoComponent implements OnInit {
   cidades: any;
   arquivoInstituicao: any;
   ativo : boolean = false;
+  ativoprazo : boolean = false;
   displayedColumns = ['sNome'];
 
   submitted = false;
@@ -86,6 +87,7 @@ export class InstituicaoComponent implements OnInit {
       this.id = JSON.parse(user).id;
       this.idCidade = JSON.parse(user).idCidade;
       this.ativo = true;
+      this.prazo();
     }else{
       this.id = 0;
       this.ativo = false;
@@ -322,5 +324,16 @@ export class InstituicaoComponent implements OnInit {
     this._router.navigate(['/']);
   }
 
+  prazo(){
+    this.authenticationService.prazo().subscribe(
+      data => {
+        if (data) {
+          this.ativoprazo = true;
+        } 
+      },
+      error => {
+        this.alertService.error("Erro ao realizar a operação!");
+      });
+  }
 
 }

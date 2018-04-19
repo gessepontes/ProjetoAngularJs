@@ -3,6 +3,7 @@ import { Http, Headers } from '@angular/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ProjetoService } from '../../../service/projeto/projeto.service'
 import { MensagemService } from '../../../service/mensagem/mensagem.service';
+import { AuthService } from '../../../service/auth/auth.service';
 
 @Component({
     selector: 'projeto-list',
@@ -12,9 +13,12 @@ import { MensagemService } from '../../../service/mensagem/mensagem.service';
 
 export class ProjetoListComponent {
     public projetoList: any;
-
-    constructor(public http: Http, private _router: Router, private alertService: MensagemService,private _projetoService: ProjetoService) {
+    ativoprazo: boolean = false;
+    
+    constructor(public http: Http, private _router: Router, private alertService: MensagemService,
+        private _projetoService: ProjetoService,private authenticationService: AuthService) {
         this.getProjetos();
+        this.prazo();
     }
 
     getProjetos() {
@@ -40,4 +44,16 @@ export class ProjetoListComponent {
     newProjeto(){
       this._router.navigate(['projeto']);
     }
+
+    prazo(){
+        this.authenticationService.prazo().subscribe(
+          data => {
+            if (data) {
+              this.ativoprazo = true;
+            } 
+          },
+          error => {
+            this.alertService.error("Erro ao realizar a operação!");
+          });
+      }
 }
