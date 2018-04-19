@@ -1,0 +1,216 @@
+<form [formGroup]="instituicaoForm">
+  <!-- {{diagnostic}} -->
+
+  <div  class="container">
+      <h5>{{title}}</h5>
+
+    <div class="row">
+      <div class="input-field col s3">
+        <input id="sCNPJ" type="text" kzMask="99.999.999/9999-99" formControlName="sCNPJ" class="validate" required>
+        <label for="sCNPJ" class="active">Cnpj</label>
+      </div>
+
+      <div class="input-field col s9">
+        <input id="sProponente" type="text" formControlName="sProponente" class="validate" required>
+        <label for="sProponente" class="active">Proponente</label>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="input-field col s4">
+        <input id="sEndereco" type="text" formControlName="sEndereco" class="validate" required>
+        <label for="sEndereco" class="active">Endereço</label>
+      </div>
+      <div class="input-field col s2">
+        <input id="sCep" type="text" formControlName="sCep" class="validate" kzMask="99999-999" required>
+        <label for="sCep" class="active">Cep</label>
+      </div>
+
+      <div class="input-field col s3">
+        <input id="sTelefone" type="tel" formControlName="sTelefone" class="validate" kzMask="(99) 9999-9999" required>
+        <label for="sTelefone" class="active">Telefone</label>
+      </div>
+
+      <div class="input-field col s3">
+        <input id="sFax" type="tel" formControlName="sFax" class="validate" kzMask="(99) 9999-9999" required>
+        <label for="sFax" class="active">Fax</label>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <select class="browser-default col s3" id="idEstado" formControlName="idEstado" (change)="getCidadeByIdEstado($event.target.value,true)" 
+        material-select>
+        <option value="0" selected>Selecione o estado</option>
+        <option *ngFor="let estado of estados" [value]="estado.iCodEstado">{{estado.sNomeEstado}}</option>
+      </select>
+
+      <select class="browser-default col s3" id="idCidade" formControlName="idCidade" required material-select>
+        <option style="display:none" value="">Selecione a cidade</option>
+        <option *ngFor="let cidade of cidades" [value]="cidade.iCodCidade">{{cidade.sNomeCidade}}</option>
+      </select>
+
+      <select class="browser-default col s3" id="iRegime" formControlName="iRegime" required material-select>
+        <option style="display:none" value="">Selecione o regime</option>
+        <option *ngFor="let regime of regimes" [value]="regime.id"> {{regime.nome}}</option>
+      </select>
+
+      <select class="browser-default col s3" id="iEsfera" formControlName="iEsfera" required material-select>
+        <option style="display:none" value="">Selecione a cidade</option>
+        <option *ngFor="let esfera of esferas" [value]="esfera.id">{{esfera.nome}}</option>
+      </select>
+    </div>
+
+    <div class="row">
+      <div class="input-field col s6">
+        <input id="sEmail" type="email" formControlName="sEmail" class="validate" required>
+        <label for="sEmail" class="active">Email</label>
+      </div>
+      <div class="input-field col s6">
+        <input id="sHomePage" type="url" formControlName="sHomePage" class="validate" required>
+        <label for="sHomePage" class="active">HomePage</label>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="input-field col s6">
+        <input id="sRepresentante" type="text" formControlName="sRepresentante" class="validate" required>
+        <label for="sRepresentante" class="active">Representante</label>
+      </div>
+      <div class="input-field col s2">
+        <input id="sCpfRepresentante" type="text" formControlName="sCpfRepresentante" class="validate" kzMask="999.999.999-99" required>
+        <label for="sCpfRepresentante" class="active">Cpf do representante</label>
+      </div>
+
+      <div class="input-field col s2">
+        <input id="sRG" type="text" formControlName="sRG" class="validate" required>
+        <label for="sRG" class="active">RG do representante</label>
+      </div>
+
+      <div class="input-field col s2">
+        <input id="sOrgaoExpedidor" type="text" formControlName="sOrgaoExpedidor" class="validate" required>
+        <label for="sOrgaoExpedidor" class="active">Orgão expedidor</label>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="input-field col s6">
+        <input id="sCargo" type="text" formControlName="sCargo" class="validate" required>
+        <label for="sCargo" class="active">Cargo</label>
+      </div>
+      <div class="input-field col s6">
+        <input id="sFuncao" type="text" formControlName="sFuncao" class="validate" required>
+        <label for="sFuncao" class="active">Função</label>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="input-field col s6">
+        <input id="sEnderecoRepresentante" type="text" formControlName="sEnderecoRepresentante" class="validate" required>
+        <label for="sEnderecoRepresentante" class="active">Endereço do representante</label>
+      </div>
+
+      <div class="input-field col s3">
+        <input id="sCepRepresentante" type="text" formControlName="sCepRepresentante" class="validate" kzMask="99999-999" required>
+        <label for="sCepRepresentante" class="active">Cep do representante</label>
+      </div>
+
+      <div class="input-field col s3">
+        <input id="sTelefoneRepresentante" type="tel" formControlName="sTelefoneRepresentante" class="validate" kzMask="(99) 9999-9999"
+          required>
+        <label for="sTelefoneRepresentante" class="active">Telefone do representante</label>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="input-field col s6">
+        <input id="sCoordenador" type="text" formControlName="sCoordenador" class="validate" required>
+        <label for="sCoordenador" class="active">Coordenador</label>
+      </div>
+      <div class="input-field col s2">
+        <input id="sCPFCoordenador" type="text" formControlName="sCPFCoordenador" class="validate" kzMask="999.999.999-99" required>
+        <label for="sCPFCoordenador" class="active">Cpf do coordenador</label>
+      </div>
+
+      <div class="input-field col s2">
+        <input id="sTelefoneCoordenador" type="tel" formControlName="sTelefoneCoordenador" class="validate" kzMask="(99) 9999-9999"
+          required>
+        <label for="sTelefoneCoordenador" class="active">Telefone do coordenador</label>
+      </div>
+
+      <div class="input-field col s2">
+        <input id="sFaxCoordenador" type="tel" formControlName="sFaxCoordenador" class="validate" kzMask="(99) 9999-9999" required>
+        <label for="sFaxCoordenador" class="active">Fax do coordenador</label>
+      </div>
+    </div>
+
+    <div *ngIf="id !='0'">
+      <div class="row">
+        <div class="file-field input-field col s9">
+          <div class="btn">
+            <span>Arquivo</span>
+            <input #fileInput type="file" />
+          </div>
+
+          <div class="file-path-wrapper">
+            <input class="file-path validate" type="text" placeholder="Upload file" />
+          </div>
+        </div>
+
+        <div class="s3">
+          <a class="btn" (click)="addFile()">Adicionar arquivo</a>
+        </div>
+
+      </div>
+      <div class="row">
+        <label>OBS: Verificar os documentos obrigatórios no artigo 6º do Edital 01/2017.</label>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Arquivo</th>
+              <th></th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let emp of arquivoInstituicao">
+              <th>{{emp.sNome}}</th>
+              <th width="10%" align="center">
+                <a (click)="download(emp.id,emp.sNome)">
+                  <i class="material-icons">cloud_download</i>
+                </a>
+                <a (click)="delete(emp.id)">
+                  <i class="material-icons">delete</i>
+                </a>
+              </th>
+            </tr>
+
+            <tr *ngIf="arquivoInstituicao == null">
+              <td colspan="2">Não existe arquivo cadastrado!</td>
+            </tr>
+          </tbody>
+
+        </table>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="input-field col s6">
+        <input id="sSenha" type="password" formControlName="sSenha" class="validate">
+        <label for="sSenha">Senha</label>
+      </div>
+      <div class="input-field col s6">
+        <input id="sConfirmaSenha" type="password" formControlName="sConfirmaSenha" class="validate">
+        <label for="sConfirmaSenha">Confirma Senha</label>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="input-field col s12">
+        <a class="btn" (click)="save()" [attr.disabled]="!instituicaoForm.valid?'':null">Salvar</a>
+        <a class="btn" *ngIf="!ativo" (click)="back()">Voltar</a>
+      </div>
+    </div>
+  </div>
+</form>

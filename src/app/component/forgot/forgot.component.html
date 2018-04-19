@@ -1,0 +1,28 @@
+<form [formGroup]="formForgot">
+  <div class="row">
+    <div class="input-field col s12 center">
+      <h5>Esqueci minha senha.</h5>
+    </div>
+  </div>
+
+  <div id="forgot-page" class="container">
+    <div class="col s12 card-panel">
+      <div class="row margin">
+        <div class="input-field col s12">
+          <input id="cnpj" type="text" kzMask="99.999.999/9999-99" formControlName="cnpj" class="validate" required>
+          <label for="cnpj">Cnpj</label>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="input-field col s6">
+          <button class="btn waves-effect waves-light col s12" [attr.disabled]="!formForgot.valid?'':null" (click)="send()">Enviar senha</button>
+        </div>
+
+        <div class="input-field col s6">
+          <button class="btn waves-effect waves-light col s12" (click)="back()">Voltar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

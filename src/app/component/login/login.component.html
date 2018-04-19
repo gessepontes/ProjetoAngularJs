@@ -1,0 +1,52 @@
+<form [formGroup]="formUser">
+  <div class="row">
+    <div class="input-field col s5 center offset-s1">
+      <p class="left login-form-text"> O Conselho Estadual Gestor do Fundo de Defesa dos Direitos Difusos - CEG/FDID torna público para conhecimento de todos
+        os interessados que está recebendo inscrições para seleção de projetos.. Período de Inscrição: 16 de Junho de 2017
+        a 30 de Junho de 2017. Quem pode se inscrever: Entidades Civís, Governamentais e cidadão em favorecimento de entidade
+        governamental ou não-governamental. Os projetos poderão ser protocolados no Setor de Protocolo da PGJ( Rua Assunção,1100
+        - José Bonifácio) ou enviados pelo site do MP. Instruções para inscrição on-line.</p>
+
+      <a target="_self" href="assets/doc/Edital2017Projetos.doc" download="Edital2017Projetos.doc">Edital 01/2017</a> -
+      <a target="_self" href="assets/doc/Resolucao48.doc" download="Resolucao48.doc">Resolução 48/2017</a> -
+      <a target="_self" href="assets/doc/Resolucao49.doc" download="Resolucao49.doc">Resolução 49/2017</a>
+    </div>
+
+    <div class="col s2">
+    </div>
+
+    <div class="col s3 card-panel">
+      <div class="row margin">
+        <div class="input-field col s12">
+          <input id="cnpj" type="text" kzMask="99.999.999/9999-99" formControlName="cnpj" class="validate" required>
+          <label for="cnpj">Cnpj</label>
+        </div>
+      </div>
+      <div class="row margin">
+        <div class="input-field col s12">
+          <input id="password" type="password" formControlName="password" class="validate" required>
+          <label for="password">Senha</label>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="input-field col s12">
+          <button class="btn waves-effect waves-light col s12" [attr.disabled]="!formUser.valid?'':null" (click)="login()">Login</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s6 m6 l6">
+          <p class="margin medium-small">
+            <a (click)="newInstituicao()">Registrar agora!</a>
+          </p>
+        </div>
+        <div class="input-field col s6 m6 l6">
+          <p class="margin right-align medium-small">
+            <a (click)="forgot()">Esqueci a senha ?</a>
+          </p>
+        </div>
+      </div>
+    </div>
+    <app-mensagem></app-mensagem>
+  </div>
+</form>

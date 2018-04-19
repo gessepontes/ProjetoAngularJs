@@ -1,0 +1,38 @@
+<div  class="container">
+    <h5>Lista de projetos</h5>
+    <p *ngIf="!projetoList"><em>Loading...</em></p>
+    <p>
+        <a (click)="newProjeto()">Novo projeto</a>
+    </p>
+
+    <table>
+
+        <thead>
+            <tr>
+                <th>Projeto</th>
+                <th>N° Processo</th>
+                <th>Data de cadastro</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let emp of projetoList">
+                <th>{{ emp.sTitulo }}</th>
+                <th>{{ emp.sNoProcesso }}</th>
+                <th>{{ emp.dDataCadastro | date: 'dd/MM/yyyy' }}</th>
+                <th width="10%" align="center">
+                    <a [routerLink]="['/projeto/edit/', emp.id]">
+                      <i class="material-icons">edit</i>
+                    </a>
+                    <a (click)="delete(emp.id)">
+                        <i class="material-icons">delete</i>
+                    </a>
+                </th>
+            </tr>
+
+            <tr *ngIf="projetoList == ''">
+                <td colspan="3">Não existe projeto cadastrado!</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
