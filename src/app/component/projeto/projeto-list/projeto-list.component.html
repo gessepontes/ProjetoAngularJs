@@ -2,7 +2,7 @@
     <h5>Lista de projetos</h5>
     <p *ngIf="!projetoList"><em>Loading...</em></p>
     <p>
-        <a (click)="newProjeto()">Novo projeto</a>
+        <a (click)="newProjeto()" *ngIf="ativoprazo">Novo projeto</a>
     </p>
 
     <table>

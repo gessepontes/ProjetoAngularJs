@@ -1,146 +1,146 @@
-<div  class="container">
+<div class="container">
 
-<form [formGroup]="projetoForm">
-  <h5>{{title}}</h5>
-  <!-- {{diagnostic}} -->
+  <form [formGroup]="projetoForm">
+    <h5>{{title}}</h5>
+    <!-- {{diagnostic}} -->
 
-  <div class="row">
-    <div class="input-field col s12">
-      <input id="sTitulo" type="text" formControlName="sTitulo" placeholder="Titulo" class="validate" required>
-      <label class="active" for="sTitulo">Titulo</label>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="input-field col s12">
-      <label for="sArea">Área Principal do Projeto</label>
-    </div>
-  </div>
-
-  <div class="row">
-
-  </div>
-
-  <div class="action-checkbox" *ngFor="let area of areas">
-    <input type="checkbox" [checked]="(aArea && (-1 !== aArea.indexOf(area.id)) ? 'checked' : '')" (change)="sArea($event.target.value,true)"
-      id="{{area.id}}" name="{{area.id}}" value="{{area.id}}" />
-    <label for="{{area.id}}">
-      {{area.nome}}
-    </label>
-  </div>
-
-
-  <div class="row">
-
-  </div>
-
-  <div class="row">
-    <div class="input-field col s3">
-      <input id="dDataInicio" type="date" formControlName="dDataInicio" placeholder="Data de inicio" class="validate" required>
-      <label for="dDataInicio" class="active">Data de inicio</label>
+    <div class="row">
+      <div class="input-field col s12">
+        <input id="sTitulo" type="text" formControlName="sTitulo" placeholder="Titulo" class="validate" required>
+        <label class="active" for="sTitulo">Titulo</label>
+      </div>
     </div>
 
-    <div class="input-field col s3">
-      <input id="dDataTermino" type="date" class="validate" formControlName="dDataTermino" placeholder="Data de termino" required>
-      <label for="dDataTermino" class="active">Data de termino</label>
+    <div class="row">
+      <div class="input-field col s12">
+        <label for="sArea">Área Principal do Projeto</label>
+      </div>
     </div>
 
-    <div class="input-field col s3">
-      <input id="mValor" type="text" formControlName="mValor" class="validate" placeholder="Valor" kzMaskCurrency required>
-      <label for="mValor" class="active">Valor</label>
+    <div class="row">
+
     </div>
 
-    <div class="input-field col s3">
-      <input id="mValorContraPartida" type="text" formControlName="mValorContraPartida" placeholder="Valor da contra partida" class="validate"
-        kzMaskCurrency required>
-      <label for="mValorContraPartida" class="active">Valor da contra partida</label>
-    </div>
-  </div>
-
-  <div class="row">
-    <label class="col s1" for="power">Municipio</label>
-    <select class="browser-default col s3" id="idCidade" formControlName="idCidade" required material-select>
-      <option style="display:none" value="">Selecione a cidade</option>
-      <option *ngFor="let cidade of cidades" [value]="cidade.iCodCidade">{{cidade.sNomeCidade}}</option>
-    </select>
-  </div>
-
-  <div class="row">
-    <div class="input-field col s12">
-      <textarea id="tResumo" formControlName="tResumo" placeholder="Resumo" class="materialize-textarea"></textarea>
-      <label for="tResumo" class="active">Resumo</label>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="form-group col-md-12">
-      <label>
-        Anexar os formulários (anexo I e II) do MANUAL BÁSICO PRA APRESENTAÇÃO DE PROJETOS em formato PDF devidamente assinados e
-        autenticados. Consultar Manual Básico para o preenchimento.
+    <div class="action-checkbox" *ngFor="let area of areas">
+      <input type="checkbox" [checked]="(aArea && (-1 !== aArea.indexOf(area.id)) ? 'checked' : '')" (change)="sArea($event.target.value,true)"
+        id="{{area.id}}" name="{{area.id}}" value="{{area.id}}" />
+      <label for="{{area.id}}">
+        {{area.nome}}
       </label>
-
-      <a target="_self" href="assets/doc/Anexos.doc" download="Anexos.doc">Baixar Formulário</a>
     </div>
-  </div>
 
-  <div *ngIf="id !='0'">
+
     <div class="row">
-      <div class="file-field input-field col s9">
-        <div class="btn">
-          <span>Arquivo</span>
-          <input #fileInput type="file" />
-        </div>
 
-        <div class="file-path-wrapper">
-          <input class="file-path validate" type="text" placeholder="Upload file" />
-        </div>
+    </div>
+
+    <div class="row">
+      <div class="input-field col s3">
+        <input id="dDataInicio" type="date" formControlName="dDataInicio" placeholder="Data de inicio" class="validate" required>
+        <label for="dDataInicio" class="active">Data de inicio</label>
       </div>
 
-      <div class="s3">
-        <a class="btn" (click)="addFile()">Adicionar arquivo</a>
+      <div class="input-field col s3">
+        <input id="dDataTermino" type="date" class="validate" formControlName="dDataTermino" placeholder="Data de termino" required>
+        <label for="dDataTermino" class="active">Data de termino</label>
       </div>
 
+      <div class="input-field col s3">
+        <input id="mValor" type="text" formControlName="mValor" class="validate" placeholder="Valor" kzMaskCurrency required>
+        <label for="mValor" class="active">Valor</label>
+      </div>
+
+      <div class="input-field col s3">
+        <input id="mValorContraPartida" type="text" formControlName="mValorContraPartida" placeholder="Valor da contra partida" class="validate"
+          kzMaskCurrency required>
+        <label for="mValorContraPartida" class="active">Valor da contra partida</label>
+      </div>
     </div>
+
     <div class="row">
-      <label>OBS: Verificar os documentos obrigatórios no artigo 6º do Edital 01/2017.</label>
-
-      <table>
-        <thead>
-          <tr>
-            <th>Arquivo</th>
-            <th></th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <tr *ngFor="let emp of arquivoProjeto">
-            <th>{{emp.sNome}}</th>
-            <th width="10%" align="center">
-              <a (click)="download(emp.id,emp.sNome)">
-                <i class="material-icons">cloud_download</i>
-              </a>
-              <a (click)="delete(emp.id)" *ngIf="ativoprazo">
-                <i class="material-icons">delete</i>
-              </a>
-            </th>
-          </tr>
-
-          <tr *ngIf="arquivoProjeto == null">
-            <td colspan="2">Não existe arquivo cadastrado!</td>
-          </tr>
-        </tbody>
-
-      </table>
+      <label class="col s1" for="power">Municipio</label>
+      <select class="browser-default col s3" id="idCidade" formControlName="idCidade" required material-select>
+        <option style="display:none" value="">Selecione a cidade</option>
+        <option *ngFor="let cidade of cidades" [value]="cidade.iCodCidade">{{cidade.sNomeCidade}}</option>
+      </select>
     </div>
-  </div>
 
-
-  <div class="row">
-    <div class="input-field col s12">
-      <a class="btn" (click)="save()" [attr.disabled]="!projetoForm.valid?'':null" *ngIf="ativoprazo">Salvar</a>
-      <a class="btn" (click)="cancel()">Voltar</a>
+    <div class="row">
+      <div class="input-field col s12">
+        <textarea id="tResumo" formControlName="tResumo" placeholder="Resumo" class="materialize-textarea"></textarea>
+        <label for="tResumo" class="active">Resumo</label>
+      </div>
     </div>
-  </div>
-</form>
+
+    <div class="row">
+      <div class="form-group col-md-12">
+        <label>
+          Anexar os formulários (anexo I e II) do MANUAL BÁSICO PRA APRESENTAÇÃO DE PROJETOS em formato PDF devidamente assinados e
+          autenticados. Consultar Manual Básico para o preenchimento.
+        </label>
+
+        <a target="_self" href="assets/doc/Anexos.doc" download="Anexos.doc">Baixar Formulário</a>
+      </div>
+    </div>
+
+    <div *ngIf="id !='0'">
+      <div class="row">
+        <div class="file-field input-field col s9 col m9">
+          <div class="btn">
+            <span>Arquivo</span>
+            <input #fileInput type="file" />
+          </div>
+
+          <div class="file-path-wrapper">
+            <input class="file-path validate" type="text" placeholder="Upload file" />
+          </div>
+        </div>
+
+        <div class="col s3 col m3 addFile">
+          <a class="btn" (click)="addFile()">Adicionar arquivo</a>
+        </div>
+
+      </div>
+      <div class="row">
+        <label>OBS: Verificar os documentos obrigatórios no artigo 6º do Edital 01/2017.</label>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Arquivo</th>
+              <th></th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let emp of arquivoProjeto">
+              <th>{{emp.sNome}}</th>
+              <th width="10%" align="center">
+                <a (click)="download(emp.id,emp.sNome)">
+                  <i class="material-icons">cloud_download</i>
+                </a>
+                <a (click)="delete(emp.id)" *ngIf="ativoprazo">
+                  <i class="material-icons">delete</i>
+                </a>
+              </th>
+            </tr>
+
+            <tr *ngIf="arquivoProjeto == null">
+              <td colspan="2">Não existe arquivo cadastrado!</td>
+            </tr>
+          </tbody>
+
+        </table>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="input-field col s12">
+        <a class="btn" (click)="save()" [attr.disabled]="!projetoForm.valid?'':null" *ngIf="ativoprazo">Salvar</a>
+        <a class="btn" (click)="cancel()">Voltar</a>
+      </div>
+    </div>
+  </form>
 
 </div>

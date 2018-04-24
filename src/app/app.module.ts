@@ -31,6 +31,7 @@ import { KzMaskCurrencyDirective } from './directive/masked-input/kz-mask-curren
 
 import { MaterializeModule  } from 'angular2-materialize';
 import { ForgotComponent } from './component/forgot/forgot.component';
+import { HttpClient } from './service/httpclient';
 
 
 @NgModule({
@@ -57,7 +58,7 @@ import { ForgotComponent } from './component/forgot/forgot.component';
   ],
   providers: [AuthService, AuthGuard, InstituicaoService,
     EstadoService, CidadeService,
-    MensagemService, ArquivoInstituicaoService,ArquivoProjetoService,ProjetoService],
+    MensagemService, ArquivoInstituicaoService,ArquivoProjetoService,ProjetoService,HttpClient],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

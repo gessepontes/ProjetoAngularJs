@@ -14,15 +14,20 @@ import { AuthService } from '../../../service/auth/auth.service';
 export class ProjetoListComponent {
     public projetoList: any;
     ativoprazo: boolean = false;
-    
+    user;
+
     constructor(public http: Http, private _router: Router, private alertService: MensagemService,
         private _projetoService: ProjetoService,private authenticationService: AuthService) {
-        this.getProjetos();
-        this.prazo();
+            
+             this.user = localStorage.getItem('currentUser');
+            if (this.user != null) {
+              this.getProjetos(JSON.parse(this.user).id);
+              this.prazo();
+            }
     }
 
-    getProjetos() {
-        this._projetoService.getProjetos().subscribe(
+    getProjetos(id) {
+        this._projetoService.getProjetoByIdInstituicao(id).subscribe(
             data => this.projetoList = data
         )
     }
@@ -35,7 +40,7 @@ export class ProjetoListComponent {
                     this.alertService.error("Erro ao realizar a operação!");
                 } else {
                     this.alertService.success("Operação realizada com sucesso!");
-                    this.getProjetos();
+                    this.getProjetos(JSON.parse(this.user).id);
                 }
             }, error => console.error(error))
         }

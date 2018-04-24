@@ -5,15 +5,13 @@ import { Router } from '@angular/router';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
-import {Geral} from '../../model/geral';
 
 @Injectable()
-export class CidadeService extends Geral{
+export class CidadeService{
     myAppUrl: string = "";
 
     constructor(private _http: Http) {
-        super();
-        this.myAppUrl = this.sUrl;
+        this.myAppUrl = localStorage.getItem('sUrl');
     }
 
     getCidadeByIdEstado(id: number) {

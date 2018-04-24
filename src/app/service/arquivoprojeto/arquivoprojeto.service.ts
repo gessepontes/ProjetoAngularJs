@@ -1,31 +1,30 @@
 import { Injectable, Inject } from '@angular/core';
 import { Http, Response, ResponseContentType } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import { Router } from '@angular/router';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
-import {Geral} from '../../model/geral';
+
+import { HttpClient } from '../httpclient';
 
 @Injectable()
-export class ArquivoProjetoService extends Geral{
+export class ArquivoProjetoService{
     myAppUrl: string = "";
 
-    constructor(private _http: Http) {
-      super();
-      this.myAppUrl = this.sUrl;
+    constructor(private _http: Http,private _httpClient: HttpClient) {
+        this.myAppUrl = localStorage.getItem('sUrl');
     }
 
     getArquivoProjeto() {
-        return this._http.get(this.myAppUrl + 'ArquivoProjeto/')
+        return this._httpClient.get(this.myAppUrl + 'ArquivoProjeto/', localStorage.getItem('token'))
             .map((response: Response) => response.json())
-            .catch(this.errorHandler);
+            .catch(this._httpClient.errorHandler);
     }
 
     getArquivoProjetoById(id: number) {
-        return this._http.get(this.myAppUrl + "ArquivoProjeto/" + id)
+        return this._httpClient.get(this.myAppUrl + "ArquivoProjeto/" + id, localStorage.getItem('token'))
             .map((response: Response) => response.json())
-            .catch(this.errorHandler)
+            .catch(this._httpClient.errorHandler)
     }
 
     addArquivoProjeto(fileToUpload: any, IDProjeto: any) {
@@ -36,15 +35,15 @@ export class ArquivoProjetoService extends Geral{
         return this._http
             .post(this.myAppUrl + "ArquivoProjeto", input)
             .map((response: Response) => response.json())
-            .catch(this.errorHandler);
+            .catch(this._httpClient.errorHandler);
 
     }
 
 
     deleteArquivoProjeto(id: number) {
-        return this._http.delete(this.myAppUrl + "ArquivoProjeto/" + id)
+        return this._httpClient.delete(this.myAppUrl + "ArquivoProjeto/" + id, localStorage.getItem('token'))
             .map((response: Response) => response.json())
-            .catch(this.errorHandler);
+            .catch(this._httpClient.errorHandler);
     }
 
     download(id: number) {
@@ -53,12 +52,5 @@ export class ArquivoProjetoService extends Geral{
                 return new Blob([res.blob()], { type: 'application/pdf' })
             });
     }
-
-    errorHandler(error: Response) {
-        console.log(error);
-        return Observable.throw(error);
-    }
-
-
 }
 

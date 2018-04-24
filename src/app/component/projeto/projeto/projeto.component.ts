@@ -16,7 +16,7 @@ import { AuthService } from '../../../service/auth/auth.service';
   styleUrls: ['./projeto.component.scss']
 })
 
-export class ProjetoComponent implements OnInit {
+export class ProjetoComponent implements OnInit { 
   @ViewChild("fileInput") fileInput: any;
   projetoForm: FormGroup;
   title: string = "Novo Projeto";
@@ -98,7 +98,7 @@ export class ProjetoComponent implements OnInit {
   getCidadeByIdEstado(id: number) {
     this._cidadeService.getCidadeByIdEstado(id)
       .subscribe(data => this.cidades = data
-        , error => this.errorMessage = error);
+        , error => this.errorHandler(error));
   }
 
   sArea(id: number) {
@@ -116,7 +116,6 @@ export class ProjetoComponent implements OnInit {
 
 
   ngOnInit() {
-
     this.projetoForm = this._fb.group({
       id: '0',
       idInstituicao: '0',
@@ -132,6 +131,9 @@ export class ProjetoComponent implements OnInit {
     });
 
     if (this.idInstituicao > 0) {
+      
+      this.prazo();
+
       if (this.id > 0) {
         this.getProjetoById(this.id);
       }
@@ -160,7 +162,7 @@ export class ProjetoComponent implements OnInit {
           this.arquivoProjeto = null;
         }       
       }
-        , error => this.alertService.error(error));
+        , error => this.errorHandler(error));
   }
 
   addProjeto() {
@@ -172,7 +174,7 @@ export class ProjetoComponent implements OnInit {
           this.alertService.success("Operação realizada com sucesso!");
           this.router.navigate(['/projeto-list']);
         }
-      }, error => this.alertService.error(error))
+      },error => this.errorHandler(error));
   }
 
   updateProjeto() {
@@ -184,7 +186,7 @@ export class ProjetoComponent implements OnInit {
           this.alertService.success("Operação realizada com sucesso!");
           this.router.navigate(['/projeto-list']);
         }
-      }, error => this.alertService.error(error))
+      }, error => this.errorHandler(error));
   }
 
   save() {
@@ -230,7 +232,7 @@ export class ProjetoComponent implements OnInit {
             this.alertService.success("Operação realizada com sucesso!");
             this.getProjetoById(this.projetoForm.value.id);
           }
-        }, error => this.alertService.error(error));
+        }, error => this.errorHandler(error));
 
 
     } else {
@@ -258,10 +260,18 @@ export class ProjetoComponent implements OnInit {
             this.alertService.success("Operação realizada com sucesso!");
             this.getProjetoById(this.projetoForm.value.id);
           }
-        }, error => this.alertService.error(error));
+        }, error => this.errorHandler(error));
     }
   }
 
+  errorHandler(error: Response) {
+    if(error.status == 401){
+        this.alertService.error("Sua sessão expirou entre novamente com seu usuário.");
+        this.router.navigate(['/login']);
+      }else{
+        this.alertService.error("Erro ao realizar a operação!");
+      }
+  }
 
   prazo(){
     this.authenticationService.prazo().subscribe(

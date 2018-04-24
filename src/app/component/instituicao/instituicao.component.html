@@ -135,18 +135,18 @@
       <div class="input-field col s2">
         <input id="sTelefoneCoordenador" type="tel" formControlName="sTelefoneCoordenador" class="validate" kzMask="(99) 9999-9999"
           required>
-        <label for="sTelefoneCoordenador" class="active">Telefone do coordenador</label>
+        <label for="sTelefoneCoordenador" class="active">Telefone</label>
       </div>
 
       <div class="input-field col s2">
         <input id="sFaxCoordenador" type="tel" formControlName="sFaxCoordenador" class="validate" kzMask="(99) 9999-9999" required>
-        <label for="sFaxCoordenador" class="active">Fax do coordenador</label>
+        <label for="sFaxCoordenador" class="active">Fax</label>
       </div>
     </div>
 
     <div *ngIf="id !='0'">
       <div class="row">
-        <div class="file-field input-field col s9">
+        <div class="file-field input-field col s9 col m9">
           <div class="btn">
             <span>Arquivo</span>
             <input #fileInput type="file" />
@@ -157,7 +157,7 @@
           </div>
         </div>
 
-        <div class="s3">
+        <div class="col s3 col m3 addFile">
           <a class="btn" (click)="addFile()">Adicionar arquivo</a>
         </div>
 

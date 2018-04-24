@@ -4,17 +4,19 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
-import { Geral } from '../../model/geral';
 
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Injectable()
-export class AuthService extends Geral {
+export class AuthService {
     myAppUrl: string = "";
 
     constructor(private _http: Http) {
-        super();
-        this.myAppUrl = this.sUrl;
+        this._http.get('assets/appsettings.json')
+        .subscribe(res => {
+            this.myAppUrl = res.json().defaultUrl;
+            localStorage.setItem('sUrl',  res.json().defaultUrl);
+        });
     }
 
     login(cnpj: string, password: string) {
@@ -26,6 +28,12 @@ export class AuthService extends Geral {
                     this.loggedIn.next(true);
                     // store user details and jwt token in local storage to keep user logged in between page refreshes
                     localStorage.setItem('currentUser', JSON.stringify(user));
+
+                    this._http.get(this.myAppUrl + "Auth/token/" + user.sCNPJ)
+                        .subscribe((response: Response) => {
+                            localStorage.setItem('token', response.json());
+                        })
+                   
                     return user;
                 }
             })

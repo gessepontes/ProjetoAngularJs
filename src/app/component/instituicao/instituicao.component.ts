@@ -82,16 +82,17 @@ export class InstituicaoComponent implements OnInit {
     this.getEstado();
 
     let user = localStorage.getItem('currentUser');
-
+    
     if (user != null) {
       this.id = JSON.parse(user).id;
       this.idCidade = JSON.parse(user).idCidade;
       this.ativo = true;
-      this.prazo();
     }else{
       this.id = 0;
       this.ativo = false;
     }
+
+    this.prazo();
   }
 
   ngOnInit() {
@@ -143,7 +144,7 @@ export class InstituicaoComponent implements OnInit {
   getEstado() {
     this._estadoService.getEstados()
       .subscribe(data => this.estados = data
-        , error => this.alertService.error(error));
+        ,error => this.errorHandler(error));
   }
 
   getCidadeByIdEstado(id: number, tipo: boolean) {
@@ -155,7 +156,7 @@ export class InstituicaoComponent implements OnInit {
           this.instituicaoForm.value.idCidade = '';
         }
       }
-        , error => this.alertService.error(error));
+        , error => this.errorHandler(error));
   }
 
   getInstituicao(id: number) {
@@ -173,7 +174,16 @@ export class InstituicaoComponent implements OnInit {
 
         this.getCidadeByIdEstado(this.instituicaoForm.value.idEstado, false);
       }
-        , error => this.alertService.error(error));
+        , error => this.errorHandler(error));
+  }
+
+  errorHandler(error: Response) {
+    if(error.status == 401){
+        this.alertService.error("Sua sessão expirou entre novamente com seu usuário.");
+        this._router.navigate(['/login']);
+      }else{
+        this.alertService.error("Erro ao realizar a operação!");
+      }
   }
 
   testSenha() {
@@ -232,7 +242,7 @@ export class InstituicaoComponent implements OnInit {
                 this.alertService.error("Erro ao realizar a operação!");
               });
         }
-      }, error => this.alertService.error(error))
+      }, error => this.errorHandler(error));
   }
 
   updateInstituicao() {
@@ -243,7 +253,7 @@ export class InstituicaoComponent implements OnInit {
         } else {
           this.alertService.success("Operação realizada com sucesso!");
         }
-      }, error => this.alertService.error(error))
+      },error => this.errorHandler(error));
   }
 
   save() {
