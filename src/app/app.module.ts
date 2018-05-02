@@ -33,6 +33,9 @@ import { MaterializeModule  } from 'angular2-materialize';
 import { ForgotComponent } from './component/forgot/forgot.component';
 import { HttpClient } from './service/httpclient';
 
+import { HttpClientModule } from '@angular/common/http';
+import { NgHttpLoaderModule } from 'ng-http-loader/ng-http-loader.module';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -50,13 +53,13 @@ import { HttpClient } from './service/httpclient';
     ChangerpasswordComponent           
   ],
   imports: [
-    BrowserModule, HttpModule,
+    BrowserModule, HttpModule,HttpClientModule,NgHttpLoaderModule,
     AppRoutingModule,
     ReactiveFormsModule,
     BrowserAnimationsModule ,
     MaterializeModule 
   ],
-  providers: [AuthService, AuthGuard, InstituicaoService,
+  providers: [AuthService, AuthGuard, InstituicaoService,{provide: LocationStrategy, useClass: HashLocationStrategy},
     EstadoService, CidadeService,
     MensagemService, ArquivoInstituicaoService,ArquivoProjetoService,ProjetoService,HttpClient],
   bootstrap: [AppComponent]

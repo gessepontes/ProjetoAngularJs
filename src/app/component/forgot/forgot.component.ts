@@ -22,7 +22,7 @@ export class ForgotComponent implements OnInit {
   }
 
   back(){
-    this.router.navigate(['/']);
+    this.router.navigate(['/login']);
   }
 
   send(){

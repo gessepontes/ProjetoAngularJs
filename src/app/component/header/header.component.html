@@ -1,4 +1,8 @@
   <nav class="ui-g">
+      <a href="#" data-activates="menu-mobile" class="button-collapse">
+          <i class="material-icons" *ngIf="isLoggedIn$ | async">menu</i>
+      </a>
+
       <div class="ui-md-6">
           <div class="sistema">
             <div class="logo"><img id="j_idt10" src="assets/img/logo_completa.png" alt="">
@@ -16,13 +20,27 @@
                   <a (click)="instituicao()">Instituição</a>
                 </li>
                 <li>
-                  <a mat-button (click)="projeto()">Projetos</a>
+                  <a (click)="projeto()">Projetos</a>
                 </li>
                 <li>
                   <a (click)="onLogout()">Sair</a>
                 </li>
               </ul>
-        </div>        
+        </div>  
+        
+        <div class="nav-wrapper">
+                <ul class="side-nav" id="menu-mobile">
+                    <li>
+                        <a (click)="instituicao()">Instituição</a>
+                      </li>
+                      <li>
+                        <a (click)="projeto()">Projetos</a>
+                      </li>
+                      <li>
+                        <a (click)="onLogout()">Sair</a>
+                      </li>
+                </ul>
+            </div>
   </nav>
 
   <div class="ui-menu ui-menubar"></div>

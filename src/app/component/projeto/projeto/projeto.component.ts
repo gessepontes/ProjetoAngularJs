@@ -9,6 +9,7 @@ import { MensagemService } from '../../../service/mensagem/mensagem.service';
 import { ArquivoProjetoService } from '../../../service/arquivoprojeto/arquivoprojeto.service'
 import { saveAs } from 'file-saver';
 import { AuthService } from '../../../service/auth/auth.service';
+import { SpinnerVisibilityService } from 'ng-http-loader/services/spinner-visibility.service';
 
 @Component({
   selector: 'projeto',
@@ -74,14 +75,17 @@ export class ProjetoComponent implements OnInit {
   get diagnostic() { return JSON.stringify(this.projetoForm.value); }
   ativoprazo: boolean = false;
 
-  constructor(private _fb: FormBuilder, private _avRoute: ActivatedRoute, private _cidadeService: CidadeService,
+  constructor(private _fb: FormBuilder, private _avRoute: ActivatedRoute, private _cidadeService: CidadeService,private spinner: SpinnerVisibilityService,
     private alertService: MensagemService, private _arquivoProjetoService: ArquivoProjetoService,private authenticationService: AuthService,
     private _projetoService: ProjetoService, private router: Router) {
     
+    spinner.show();
+
     if (this._avRoute.snapshot.params["id"]) {
        this.id = this._avRoute.snapshot.params["id"];
        this.prazo();
     }else{
+      this.spinner.hide();
       this.id = 0;
     }
 
@@ -160,7 +164,9 @@ export class ProjetoComponent implements OnInit {
           this.arquivoProjeto = this.projetoForm.value.arquivoProjeto;
         } else{
           this.arquivoProjeto = null;
-        }       
+        } 
+        
+        this.spinner.hide();
       }
         , error => this.errorHandler(error));
   }
@@ -265,6 +271,9 @@ export class ProjetoComponent implements OnInit {
   }
 
   errorHandler(error: Response) {
+
+    this.spinner.hide();
+    
     if(error.status == 401){
         this.alertService.error("Sua sessão expirou entre novamente com seu usuário.");
         this.router.navigate(['/login']);

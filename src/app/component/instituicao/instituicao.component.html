@@ -5,33 +5,33 @@
       <h5>{{title}}</h5>
 
     <div class="row">
-      <div class="input-field col s3">
+      <div class="input-field col l3 m6 s12">
         <input id="sCNPJ" type="text" kzMask="99.999.999/9999-99" formControlName="sCNPJ" class="validate" required>
         <label for="sCNPJ" class="active">Cnpj</label>
       </div>
 
-      <div class="input-field col s9">
+      <div class="input-field col l9 m6 s12">
         <input id="sProponente" type="text" formControlName="sProponente" class="validate" required>
         <label for="sProponente" class="active">Proponente</label>
       </div>
     </div>
 
     <div class="row">
-      <div class="input-field col s4">
+      <div class="input-field col l4 m6 s12">
         <input id="sEndereco" type="text" formControlName="sEndereco" class="validate" required>
         <label for="sEndereco" class="active">Endereço</label>
       </div>
-      <div class="input-field col s2">
+      <div class="input-field col l2 m6 s12">
         <input id="sCep" type="text" formControlName="sCep" class="validate" kzMask="99999-999" required>
         <label for="sCep" class="active">Cep</label>
       </div>
 
-      <div class="input-field col s3">
+      <div class="input-field col l3 m6 s12">
         <input id="sTelefone" type="tel" formControlName="sTelefone" class="validate" kzMask="(99) 9999-9999" required>
         <label for="sTelefone" class="active">Telefone</label>
       </div>
 
-      <div class="input-field col s3">
+      <div class="input-field col l3 m6 s12">
         <input id="sFax" type="tel" formControlName="sFax" class="validate" kzMask="(99) 9999-9999" required>
         <label for="sFax" class="active">Fax</label>
       </div>
@@ -39,83 +39,83 @@
 
 
     <div class="row">
-      <select class="browser-default col s3" id="idEstado" formControlName="idEstado" (change)="getCidadeByIdEstado($event.target.value,true)" 
+      <select class="browser-default col l3 m6 s12" id="idEstado" formControlName="idEstado" (change)="getCidadeByIdEstado($event.target.value,true)" 
         material-select>
         <option value="0" selected>Selecione o estado</option>
         <option *ngFor="let estado of estados" [value]="estado.iCodEstado">{{estado.sNomeEstado}}</option>
       </select>
 
-      <select class="browser-default col s3" id="idCidade" formControlName="idCidade" required material-select>
+      <select class="browser-default col l3 m6 s12" id="idCidade" formControlName="idCidade" required material-select>
         <option style="display:none" value="">Selecione a cidade</option>
         <option *ngFor="let cidade of cidades" [value]="cidade.iCodCidade">{{cidade.sNomeCidade}}</option>
       </select>
 
-      <select class="browser-default col s3" id="iRegime" formControlName="iRegime" required material-select>
+      <select class="browser-default col l3 m6 s12" id="iRegime" formControlName="iRegime" required material-select>
         <option style="display:none" value="">Selecione o regime</option>
         <option *ngFor="let regime of regimes" [value]="regime.id"> {{regime.nome}}</option>
       </select>
 
-      <select class="browser-default col s3" id="iEsfera" formControlName="iEsfera" required material-select>
+      <select class="browser-default col l3 m6 s12" id="iEsfera" formControlName="iEsfera" required material-select>
         <option style="display:none" value="">Selecione a cidade</option>
         <option *ngFor="let esfera of esferas" [value]="esfera.id">{{esfera.nome}}</option>
       </select>
     </div>
 
     <div class="row">
-      <div class="input-field col s6">
+      <div class="input-field col l6 m6 s12">
         <input id="sEmail" type="email" formControlName="sEmail" class="validate" required>
         <label for="sEmail" class="active">Email</label>
       </div>
-      <div class="input-field col s6">
+      <div class="input-field col l6 m6 s12">
         <input id="sHomePage" type="url" formControlName="sHomePage" class="validate" required>
         <label for="sHomePage" class="active">HomePage</label>
       </div>
     </div>
 
     <div class="row">
-      <div class="input-field col s6">
+      <div class="input-field col l6 m6 s12">
         <input id="sRepresentante" type="text" formControlName="sRepresentante" class="validate" required>
         <label for="sRepresentante" class="active">Representante</label>
       </div>
-      <div class="input-field col s2">
+      <div class="input-field col l2 m6 s12">
         <input id="sCpfRepresentante" type="text" formControlName="sCpfRepresentante" class="validate" kzMask="999.999.999-99" required>
         <label for="sCpfRepresentante" class="active">Cpf do representante</label>
       </div>
 
-      <div class="input-field col s2">
+      <div class="input-field col l2 m6 s12">
         <input id="sRG" type="text" formControlName="sRG" class="validate" required>
         <label for="sRG" class="active">RG do representante</label>
       </div>
 
-      <div class="input-field col s2">
+      <div class="input-field col l2 m6 s12">
         <input id="sOrgaoExpedidor" type="text" formControlName="sOrgaoExpedidor" class="validate" required>
         <label for="sOrgaoExpedidor" class="active">Orgão expedidor</label>
       </div>
     </div>
 
     <div class="row">
-      <div class="input-field col s6">
+      <div class="input-field col l6 m6 s12">
         <input id="sCargo" type="text" formControlName="sCargo" class="validate" required>
         <label for="sCargo" class="active">Cargo</label>
       </div>
-      <div class="input-field col s6">
+      <div class="input-field col l6 m6 s12">
         <input id="sFuncao" type="text" formControlName="sFuncao" class="validate" required>
         <label for="sFuncao" class="active">Função</label>
       </div>
     </div>
 
     <div class="row">
-      <div class="input-field col s6">
+      <div class="input-field col l6 m6 s12">
         <input id="sEnderecoRepresentante" type="text" formControlName="sEnderecoRepresentante" class="validate" required>
         <label for="sEnderecoRepresentante" class="active">Endereço do representante</label>
       </div>
 
-      <div class="input-field col s3">
+      <div class="input-field col l3 m6 s12">
         <input id="sCepRepresentante" type="text" formControlName="sCepRepresentante" class="validate" kzMask="99999-999" required>
         <label for="sCepRepresentante" class="active">Cep do representante</label>
       </div>
 
-      <div class="input-field col s3">
+      <div class="input-field col l3 m6 s12">
         <input id="sTelefoneRepresentante" type="tel" formControlName="sTelefoneRepresentante" class="validate" kzMask="(99) 9999-9999"
           required>
         <label for="sTelefoneRepresentante" class="active">Telefone do representante</label>
@@ -123,30 +123,30 @@
     </div>
 
     <div class="row">
-      <div class="input-field col s6">
+      <div class="input-field col l6 m6 s12">
         <input id="sCoordenador" type="text" formControlName="sCoordenador" class="validate" required>
         <label for="sCoordenador" class="active">Coordenador</label>
       </div>
-      <div class="input-field col s2">
+      <div class="input-field col l2 m6 s12">
         <input id="sCPFCoordenador" type="text" formControlName="sCPFCoordenador" class="validate" kzMask="999.999.999-99" required>
         <label for="sCPFCoordenador" class="active">Cpf do coordenador</label>
       </div>
 
-      <div class="input-field col s2">
+      <div class="input-field col l2 m6 s12">
         <input id="sTelefoneCoordenador" type="tel" formControlName="sTelefoneCoordenador" class="validate" kzMask="(99) 9999-9999"
           required>
         <label for="sTelefoneCoordenador" class="active">Telefone</label>
       </div>
 
-      <div class="input-field col s2">
+      <div class="input-field col l2 m6 s12">
         <input id="sFaxCoordenador" type="tel" formControlName="sFaxCoordenador" class="validate" kzMask="(99) 9999-9999" required>
         <label for="sFaxCoordenador" class="active">Fax</label>
       </div>
     </div>
 
-    <div *ngIf="id !='0'">
+    <div *ngIf="id !=0">
       <div class="row">
-        <div class="file-field input-field col s9 col m9">
+        <div class="file-field input-field col l9 m6 s12">
           <div class="btn">
             <span>Arquivo</span>
             <input #fileInput type="file" />
@@ -157,7 +157,7 @@
           </div>
         </div>
 
-        <div class="col s3 col m3 addFile">
+        <div class="col l3 m6 s12 addFile">
           <a class="btn" (click)="addFile()">Adicionar arquivo</a>
         </div>
 
@@ -176,7 +176,7 @@
           <tbody>
             <tr *ngFor="let emp of arquivoInstituicao">
               <th>{{emp.sNome}}</th>
-              <th width="10%" align="center">
+              <th align="center">
                 <a (click)="download(emp.id,emp.sNome)">
                   <i class="material-icons">cloud_download</i>
                 </a>
@@ -196,11 +196,11 @@
     </div>
 
     <div class="row">
-      <div class="input-field col s6">
+      <div class="input-field col l6 m6 s12">
         <input id="sSenha" type="password" formControlName="sSenha" class="validate">
         <label for="sSenha">Senha</label>
       </div>
-      <div class="input-field col s6">
+      <div class="input-field col l6 m6 s12">
         <input id="sConfirmaSenha" type="password" formControlName="sConfirmaSenha" class="validate">
         <label for="sConfirmaSenha">Confirma Senha</label>
       </div>

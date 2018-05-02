@@ -1,3 +1,16 @@
+@media only screen and (max-width: 980px){
+    .logo { 
+        display: none;
+     }
+
+     .titulo {
+        line-height: 1.5rem;
+        font-size: 1.0rem;
+        color: #00713c;
+    }
+         
+}
+
 .ui-g {
     display: -webkit-box;
     display: -moz-box;
@@ -36,8 +49,8 @@ nav {
 }
 
 .titulo {
-    line-height: 2.5rem;
-    font-size: 2rem;
+    line-height: 2.0rem;
+    font-size: 1.5rem;
     color: #00713c;
 }
 

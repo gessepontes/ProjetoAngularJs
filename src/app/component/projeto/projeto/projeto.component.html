@@ -5,14 +5,14 @@
     <!-- {{diagnostic}} -->
 
     <div class="row">
-      <div class="input-field col s12">
+      <div class="input-field col l12 m12 s12">
         <input id="sTitulo" type="text" formControlName="sTitulo" placeholder="Titulo" class="validate" required>
         <label class="active" for="sTitulo">Titulo</label>
       </div>
     </div>
 
     <div class="row">
-      <div class="input-field col s12">
+      <div class="input-field col l12 m12 s12">
         <label for="sArea">Área Principal do Projeto</label>
       </div>
     </div>
@@ -35,22 +35,22 @@
     </div>
 
     <div class="row">
-      <div class="input-field col s3">
+      <div class="input-field col l3 m6 s12">
         <input id="dDataInicio" type="date" formControlName="dDataInicio" placeholder="Data de inicio" class="validate" required>
         <label for="dDataInicio" class="active">Data de inicio</label>
       </div>
 
-      <div class="input-field col s3">
+      <div class="input-field col l3 m6 s12">
         <input id="dDataTermino" type="date" class="validate" formControlName="dDataTermino" placeholder="Data de termino" required>
         <label for="dDataTermino" class="active">Data de termino</label>
       </div>
 
-      <div class="input-field col s3">
+      <div class="input-field col l3 m6 s12">
         <input id="mValor" type="text" formControlName="mValor" class="validate" placeholder="Valor" kzMaskCurrency required>
         <label for="mValor" class="active">Valor</label>
       </div>
 
-      <div class="input-field col s3">
+      <div class="input-field col l3 m6 s12">
         <input id="mValorContraPartida" type="text" formControlName="mValorContraPartida" placeholder="Valor da contra partida" class="validate"
           kzMaskCurrency required>
         <label for="mValorContraPartida" class="active">Valor da contra partida</label>
@@ -58,22 +58,22 @@
     </div>
 
     <div class="row">
-      <label class="col s1" for="power">Municipio</label>
-      <select class="browser-default col s3" id="idCidade" formControlName="idCidade" required material-select>
+      <label class="col l1 m6 s6" for="power">Municipio</label>
+      <select class="browser-default col l3 m6 s6" id="idCidade" formControlName="idCidade" required material-select>
         <option style="display:none" value="">Selecione a cidade</option>
         <option *ngFor="let cidade of cidades" [value]="cidade.iCodCidade">{{cidade.sNomeCidade}}</option>
       </select>
     </div>
 
     <div class="row">
-      <div class="input-field col s12">
+      <div class="input-field col l12 m12 s12">
         <textarea id="tResumo" formControlName="tResumo" placeholder="Resumo" class="materialize-textarea"></textarea>
         <label for="tResumo" class="active">Resumo</label>
       </div>
     </div>
 
     <div class="row">
-      <div class="form-group col-md-12">
+      <div class="form-group col l12 m12 s12">
         <label>
           Anexar os formulários (anexo I e II) do MANUAL BÁSICO PRA APRESENTAÇÃO DE PROJETOS em formato PDF devidamente assinados e
           autenticados. Consultar Manual Básico para o preenchimento.
@@ -83,9 +83,9 @@
       </div>
     </div>
 
-    <div *ngIf="id !='0'">
+    <div *ngIf="id !=0">
       <div class="row">
-        <div class="file-field input-field col s9 col m9">
+        <div class="file-field input-field col l9 m6 s12">
           <div class="btn">
             <span>Arquivo</span>
             <input #fileInput type="file" />
@@ -96,7 +96,7 @@
           </div>
         </div>
 
-        <div class="col s3 col m3 addFile">
+        <div class="col l3 m6 s12 addFile">
           <a class="btn" (click)="addFile()">Adicionar arquivo</a>
         </div>
 
@@ -115,7 +115,7 @@
           <tbody>
             <tr *ngFor="let emp of arquivoProjeto">
               <th>{{emp.sNome}}</th>
-              <th width="10%" align="center">
+              <th  align="center">
                 <a (click)="download(emp.id,emp.sNome)">
                   <i class="material-icons">cloud_download</i>
                 </a>

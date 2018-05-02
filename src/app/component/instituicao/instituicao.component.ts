@@ -8,7 +8,7 @@ import { CidadeService } from '../../service/cidade/cidade.service'
 import { ArquivoInstituicaoService } from '../../service/arquivoinstituicao/arquivoinstituicao.service';
 import { AuthService } from '../../service/auth/auth.service';
 import { MensagemService } from '../../service/mensagem/mensagem.service';
-
+import { SpinnerVisibilityService } from 'ng-http-loader/services/spinner-visibility.service';
 
 import { saveAs } from 'file-saver';
 
@@ -75,10 +75,10 @@ export class InstituicaoComponent implements OnInit {
 
   constructor(private _fb: FormBuilder, private _avRoute: ActivatedRoute, 
     private _instituicaoService: InstituicaoService, private _estadoService: EstadoService, private alertService: MensagemService,
-    private _arquivoInstituicaoService: ArquivoInstituicaoService, private authenticationService: AuthService,
+    private _arquivoInstituicaoService: ArquivoInstituicaoService, private authenticationService: AuthService,private spinner: SpinnerVisibilityService,
     private _cidadeService: CidadeService, private _router: Router) {
 
-
+    spinner.show();
     this.getEstado();
 
     let user = localStorage.getItem('currentUser');
@@ -93,6 +93,7 @@ export class InstituicaoComponent implements OnInit {
     }
 
     this.prazo();
+
   }
 
   ngOnInit() {
@@ -131,6 +132,8 @@ export class InstituicaoComponent implements OnInit {
     if (this.id > 0) {
       this.title = "Editar instituição";
       this.getInstituicao(this.id);
+    }else{
+      this.spinner.hide();
     }
   }
 
@@ -173,11 +176,16 @@ export class InstituicaoComponent implements OnInit {
         }
 
         this.getCidadeByIdEstado(this.instituicaoForm.value.idEstado, false);
+
+        this.spinner.hide();
       }
         , error => this.errorHandler(error));
   }
 
   errorHandler(error: Response) {
+
+    this.spinner.hide();
+    
     if(error.status == 401){
         this.alertService.error("Sua sessão expirou entre novamente com seu usuário.");
         this._router.navigate(['/login']);

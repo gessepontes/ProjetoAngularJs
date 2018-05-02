@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../../service/auth/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MensagemService } from '../../service/mensagem/mensagem.service';
+import { SpinnerVisibilityService } from 'ng-http-loader/services/spinner-visibility.service';
 
 @Component({
   selector: 'app-login',
@@ -13,9 +14,11 @@ export class LoginComponent implements OnInit {
   formUser: FormGroup;
 
   constructor(
-    private fb: FormBuilder, private router: Router,
+    private fb: FormBuilder, private router: Router,private spinner: SpinnerVisibilityService,
     private authService: AuthService, private alertService: MensagemService,
-  ) { }
+  ) {
+
+  }
 
   ngOnInit() {
     this.formUser = this.fb.group({
@@ -27,17 +30,21 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
+
+    this.spinner.show();
     if (this.formUser.valid) {
       this.authService.login(this.formUser.value.cnpj, this.formUser.value.password).subscribe(
         data => {
           if (data == undefined) {
             this.alertService.error("Cnpj ou senha não conferem!");
           } else {
+            this.spinner.hide();
             this.router.navigate(['/']);
           }
         },
         error => {
           this.alertService.error("Erro ao realizar a operação!");
+          this.spinner.hide();
         });
     }
   }
