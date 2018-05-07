@@ -6,7 +6,7 @@ import { ProjetoListComponent } from '../projeto-list/projeto-list.component';
 import { CidadeService } from '../../../service/cidade/cidade.service'
 import { ProjetoService } from '../../../service/projeto/projeto.service'
 import { MensagemService } from '../../../service/mensagem/mensagem.service';
-import { ArquivoProjetoService } from '../../../service/arquivoprojeto/arquivoprojeto.service'
+import { ArquivoService } from '../../../service/arquivo/arquivo.service'
 import { saveAs } from 'file-saver';
 import { AuthService } from '../../../service/auth/auth.service';
 import { SpinnerVisibilityService } from 'ng-http-loader/services/spinner-visibility.service';
@@ -76,7 +76,7 @@ export class ProjetoComponent implements OnInit {
   ativoprazo: boolean = false;
 
   constructor(private _fb: FormBuilder, private _avRoute: ActivatedRoute, private _cidadeService: CidadeService,private spinner: SpinnerVisibilityService,
-    private alertService: MensagemService, private _arquivoProjetoService: ArquivoProjetoService,private authenticationService: AuthService,
+    private alertService: MensagemService, private _arquivoService: ArquivoService,private authenticationService: AuthService,
     private _projetoService: ProjetoService, private router: Router) {
     
     spinner.show();
@@ -131,7 +131,7 @@ export class ProjetoComponent implements OnInit {
       tResumo: ['', Validators.required],
       idCidade: ['', Validators.required],
       sArea: null,
-      arquivoProjeto: null
+      arquivo: null
     });
 
     if (this.idInstituicao > 0) {
@@ -160,8 +160,8 @@ export class ProjetoComponent implements OnInit {
         this.projetoForm.patchValue(data, { onlySelf: true });
         this.aArea = this.projetoForm.value.sArea;
 
-        if(this.projetoForm.value.arquivoProjeto[0] != null){
-          this.arquivoProjeto = this.projetoForm.value.arquivoProjeto;
+        if(this.projetoForm.value.arquivo[0] != null){
+          this.arquivoProjeto = this.projetoForm.value.arquivo;
         } else{
           this.arquivoProjeto = null;
         } 
@@ -229,8 +229,8 @@ export class ProjetoComponent implements OnInit {
         return;
       }
 
-      this._arquivoProjetoService
-        .addArquivoProjeto(fileToUpload, this.projetoForm.value.id)
+      this._arquivoService
+        .addArquivo(fileToUpload, this.projetoForm.value.id,2)
         .subscribe(data => {
           if (data == 0) {
             this.alertService.error("Erro ao realizar a operação!");
@@ -247,8 +247,8 @@ export class ProjetoComponent implements OnInit {
   }
 
   download(id: number, filename: string) {
-    this._arquivoProjetoService
-      .download(id).subscribe(data => {
+    this._arquivoService
+      .download(id,2).subscribe(data => {
         saveAs(data, filename);
       });
   }
@@ -257,8 +257,8 @@ export class ProjetoComponent implements OnInit {
 
     var ans = confirm("Você deseja excluir este arquivo?");
     if (ans) {
-      this._arquivoProjetoService
-        .deleteArquivoProjeto(id)
+      this._arquivoService
+        .deleteArquivo(id)
         .subscribe(data => {
           if (data == 0) {
             this.alertService.error("Erro ao realizar a operação!");

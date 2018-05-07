@@ -5,7 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { InstituicaoService } from '../../service/instituicao/instituicao.service'
 import { EstadoService } from '../../service/estado/estado.service'
 import { CidadeService } from '../../service/cidade/cidade.service'
-import { ArquivoInstituicaoService } from '../../service/arquivoinstituicao/arquivoinstituicao.service';
+import { ArquivoService } from '../../service/arquivo/arquivo.service';
 import { AuthService } from '../../service/auth/auth.service';
 import { MensagemService } from '../../service/mensagem/mensagem.service';
 import { SpinnerVisibilityService } from 'ng-http-loader/services/spinner-visibility.service';
@@ -75,7 +75,7 @@ export class InstituicaoComponent implements OnInit {
 
   constructor(private _fb: FormBuilder, private _avRoute: ActivatedRoute, 
     private _instituicaoService: InstituicaoService, private _estadoService: EstadoService, private alertService: MensagemService,
-    private _arquivoInstituicaoService: ArquivoInstituicaoService, private authenticationService: AuthService,private spinner: SpinnerVisibilityService,
+    private _arquivoService: ArquivoService, private authenticationService: AuthService,private spinner: SpinnerVisibilityService,
     private _cidadeService: CidadeService, private _router: Router) {
 
     spinner.show();
@@ -124,7 +124,7 @@ export class InstituicaoComponent implements OnInit {
       sCPFCoordenador: ['', Validators.required],
       sTelefoneCoordenador: ['', Validators.required],
       sFaxCoordenador: ['', Validators.required],
-      arquivoInstituicao: null,
+      arquivo: null,
       sSenha: '',
       sConfirmaSenha: ''
     });
@@ -169,8 +169,8 @@ export class InstituicaoComponent implements OnInit {
         data.sSenha = '';
         this.instituicaoForm.patchValue(data, { onlySelf: true });
 
-        if(this.instituicaoForm.value.arquivoInstituicao[0] != null){
-          this.arquivoInstituicao = this.instituicaoForm.value.arquivoInstituicao;
+        if(this.instituicaoForm.value.arquivo[0] != null){
+          this.arquivoInstituicao = this.instituicaoForm.value.arquivo;
         } else{
           this.arquivoInstituicao = null;
         }
@@ -297,8 +297,8 @@ export class InstituicaoComponent implements OnInit {
         return;
       }
 
-      this._arquivoInstituicaoService
-        .addArquivoInstituicao(fileToUpload, this.instituicaoForm.value.id)
+      this._arquivoService
+        .addArquivo(fileToUpload, this.instituicaoForm.value.id,1)
         .subscribe(data => {
           if (data == 0) {
             this.alertService.error("Erro ao realizar a operação!");
@@ -315,8 +315,8 @@ export class InstituicaoComponent implements OnInit {
   }
 
   download(id: number, filename: string) {
-    this._arquivoInstituicaoService
-      .download(id).subscribe(data => {
+    this._arquivoService
+      .download(id,1).subscribe(data => {
         saveAs(data, filename);
       });
   }
@@ -325,8 +325,8 @@ export class InstituicaoComponent implements OnInit {
 
     var ans = confirm("Você deseja excluir este arquivo?");
     if (ans) {
-      this._arquivoInstituicaoService
-        .deleteArquivoInstituicao(id)
+      this._arquivoService
+        .deleteArquivo(id)
         .subscribe(data => {
           if (data == 0) {
             this.alertService.error("Erro ao realizar a operação!");

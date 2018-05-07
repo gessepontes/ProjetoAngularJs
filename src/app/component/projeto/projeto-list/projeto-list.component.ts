@@ -5,6 +5,7 @@ import { ProjetoService } from '../../../service/projeto/projeto.service'
 import { MensagemService } from '../../../service/mensagem/mensagem.service';
 import { SpinnerVisibilityService } from 'ng-http-loader/services/spinner-visibility.service';
 import { AuthService } from '../../../service/auth/auth.service';
+import { PagerService } from '../../../service/pager.service';
 
 @Component({
     selector: 'projeto-list',
@@ -13,11 +14,19 @@ import { AuthService } from '../../../service/auth/auth.service';
 })
 
 export class ProjetoListComponent {
-    public projetoList: any;
     ativoprazo: boolean = false;
     user;
 
-    constructor(public http: Http, private _router: Router, private alertService: MensagemService, 
+    // array of all items to be paged
+    private allItems: any[];
+ 
+    // pager object
+    pager: any = {};
+ 
+    // paged items
+    pagedItems: any[];
+
+    constructor(public http: Http, private _router: Router, private alertService: MensagemService, private pagerService: PagerService,
         private spinner: SpinnerVisibilityService,
         private _projetoService: ProjetoService, 
         private authenticationService: AuthService) {
@@ -34,9 +43,25 @@ export class ProjetoListComponent {
     getProjetos(id) {
         this._projetoService.getProjetoByIdInstituicao(id).subscribe(
             data => {
-                this.projetoList = data;
+                this.allItems = data;
+ 
+                // initialize to page 1
+                this.setPage(1);
+                
                 this.spinner.hide();
             },  error => this.errorHandler(error));        
+    }
+
+    setPage(page: number) {
+        if (page < 1 || page > this.pager.totalPages) {
+            return;
+        }
+ 
+        // get pager object from service
+        this.pager = this.pagerService.getPager(this.allItems.length, page);
+ 
+        // get current page of items
+        this.pagedItems = this.allItems.slice(this.pager.startIndex, this.pager.endIndex + 1);
     }
 
     delete(id: number) {

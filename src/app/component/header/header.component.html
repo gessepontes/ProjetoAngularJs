@@ -16,7 +16,10 @@
 
         <div class="ui-md-6">
             <ul id="nav-mobile" class="right hide-on-med-and-down"  *ngIf="isLoggedIn$ | async">
-                <li>
+              <li>
+                <a (click)="home()">Home</a>
+              </li>
+              <li>
                   <a (click)="instituicao()">Instituição</a>
                 </li>
                 <li>
@@ -30,6 +33,9 @@
         
         <div class="nav-wrapper">
                 <ul class="side-nav" id="menu-mobile">
+                    <li>
+                        <a (click)="home()">Home</a>
+                      </li>                  
                     <li>
                         <a (click)="instituicao()">Instituição</a>
                       </li>

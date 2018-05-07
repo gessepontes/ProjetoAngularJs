@@ -1,12 +1,13 @@
-<div  class="container">
+<div class="container">
     <h5>Lista de projetos</h5>
-    <p *ngIf="!projetoList"><em>Loading...</em></p>
+    <p *ngIf="!allItems">
+        <em>Loading...</em>
+    </p>
     <p>
         <a (click)="newProjeto()" *ngIf="ativoprazo">Novo projeto</a>
     </p>
 
     <table>
-
         <thead>
             <tr>
                 <th>Projeto</th>
@@ -16,13 +17,13 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let emp of projetoList">
+            <tr *ngFor="let emp of pagedItems">
                 <th>{{ emp.sTitulo }}</th>
                 <th>{{ emp.sNoProcesso }}</th>
                 <th>{{ emp.dDataCadastro | date: 'dd/MM/yyyy' }}</th>
                 <th align="center">
                     <a [routerLink]="['/projeto/edit/', emp.id]">
-                      <i class="material-icons">edit</i>
+                        <i class="material-icons">edit</i>
                     </a>
                     <a (click)="delete(emp.id)" *ngIf="ativoprazo">
                         <i class="material-icons">delete</i>
@@ -30,9 +31,27 @@
                 </th>
             </tr>
 
-            <tr *ngIf="projetoList == ''">
+            <tr *ngIf="pagedItems == ''">
                 <td colspan="3">Não existe projeto cadastrado!</td>
             </tr>
         </tbody>
     </table>
+
+    <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+            <li [ngClass]="{disabled:pager.currentPage === 1}">
+                <a (click)="setPage(1)">Primeiro</a>
+            </li>
+            <li [ngClass]="{disabled:pager.currentPage === 1}">
+                <a (click)="setPage(pager.currentPage - 1)">Anterior</a>
+            </li>
+            <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+                <a (click)="setPage(page)">{{page}}</a>
+            </li>
+            <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                <a (click)="setPage(pager.currentPage + 1)">Próximo</a>
+            </li>
+            <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                <a (click)="setPage(pager.totalPages)">Último</a>
+            </li>
+        </ul>
 </div>

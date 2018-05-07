@@ -34,4 +34,8 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['/projeto-list']);
   }  
 
+  home() {
+    this.router.navigate(['/']);
+  }  
+
 }

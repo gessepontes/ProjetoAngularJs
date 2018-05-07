@@ -10,8 +10,7 @@ import { InstituicaoService } from './service/instituicao/instituicao.service'
 import { EstadoService } from './service/estado/estado.service'
 import { CidadeService } from './service/cidade/cidade.service'
 import { MensagemService } from './service/mensagem/mensagem.service'
-import { ArquivoInstituicaoService } from './service/arquivoinstituicao/arquivoinstituicao.service'
-import { ArquivoProjetoService } from './service/arquivoprojeto/arquivoprojeto.service';
+import { ArquivoService } from './service/arquivo/arquivo.service';
 import { ProjetoService } from './service/projeto/projeto.service';
 
 import { AppComponent } from './component/app/app.component';
@@ -36,6 +35,8 @@ import { HttpClient } from './service/httpclient';
 import { HttpClientModule } from '@angular/common/http';
 import { NgHttpLoaderModule } from 'ng-http-loader/ng-http-loader.module';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { PagerService } from './service/pager.service';
+
 
 @NgModule({
   declarations: [
@@ -50,7 +51,7 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
     ProjetoComponent,
     ProjetoListComponent,
     ForgotComponent,
-    ChangerpasswordComponent           
+    ChangerpasswordComponent       
   ],
   imports: [
     BrowserModule, HttpModule,HttpClientModule,NgHttpLoaderModule,
@@ -59,9 +60,9 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
     BrowserAnimationsModule ,
     MaterializeModule 
   ],
-  providers: [AuthService, AuthGuard, InstituicaoService,{provide: LocationStrategy, useClass: HashLocationStrategy},
+  providers: [AuthService, AuthGuard, InstituicaoService,PagerService,{provide: LocationStrategy, useClass: HashLocationStrategy},
     EstadoService, CidadeService,
-    MensagemService, ArquivoInstituicaoService,ArquivoProjetoService,ProjetoService,HttpClient],
+    MensagemService, ArquivoService,ProjetoService,HttpClient],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
