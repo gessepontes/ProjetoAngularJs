@@ -4,7 +4,7 @@
         <em>Loading...</em>
     </p>
     <p>
-        <a (click)="newProjeto()" *ngIf="ativoprazo">Novo projeto</a>
+        <a (click)="newProjeto()" *ngIf="ativoprazo && !admin">Novo projeto</a>
     </p>
 
     <table>
@@ -25,7 +25,7 @@
                     <a [routerLink]="['/projeto/edit/', emp.id]">
                         <i class="material-icons">edit</i>
                     </a>
-                    <a (click)="delete(emp.id)" *ngIf="ativoprazo">
+                    <a (click)="delete(emp.id)" *ngIf="ativoprazo && !admin">
                         <i class="material-icons">delete</i>
                     </a>
                 </th>

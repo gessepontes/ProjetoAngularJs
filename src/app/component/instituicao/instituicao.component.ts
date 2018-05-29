@@ -287,8 +287,8 @@ export class InstituicaoComponent implements OnInit {
       let fileToUpload = fi.files[0];
       let sizeFile = Math.round(fileToUpload.size / 1024);
 
-      if (sizeFile > 1024) {
-        alert("Tamanho maximo para o arquivo é de 1mb!");
+      if (sizeFile > 2048) {
+        alert("Tamanho maximo para o arquivo é de 2mb!");
         return;
       }
 

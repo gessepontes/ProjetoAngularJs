@@ -15,6 +15,7 @@ import { PagerService } from '../../../service/pager.service';
 
 export class ProjetoListComponent {
     ativoprazo: boolean = false;
+    admin: boolean = false;
     user;
 
     // array of all items to be paged
@@ -35,13 +36,32 @@ export class ProjetoListComponent {
 
         this.user = localStorage.getItem('currentUser');
         if (this.user != null) {
-            this.getProjetos(JSON.parse(this.user).id);
+
+            if (JSON.parse(this.user).cPerfil != 'A') {
+                this.getProjetoByIdInstituicao(JSON.parse(this.user).id);
+            }else{
+                this.getProjetos();
+                this.admin = true;
+            }
+
             this.prazo();
         }
     }
 
-    getProjetos(id) {
+    getProjetoByIdInstituicao(id) {
         this._projetoService.getProjetoByIdInstituicao(id).subscribe(
+            data => {
+                this.allItems = data;
+ 
+                // initialize to page 1
+                this.setPage(1);
+                
+                this.spinner.hide();
+            },  error => this.errorHandler(error));        
+    }
+
+    getProjetos() {
+        this._projetoService.getProjetos().subscribe(
             data => {
                 this.allItems = data;
  
@@ -74,7 +94,7 @@ export class ProjetoListComponent {
                     this.alertService.error("Erro ao realizar a operação!");
                 } else {
                     this.alertService.success("Operação realizada com sucesso!");
-                    this.getProjetos(JSON.parse(this.user).id);
+                    this.getProjetoByIdInstituicao(JSON.parse(this.user).id);
                 }
             },  error => this.errorHandler(error));
         }

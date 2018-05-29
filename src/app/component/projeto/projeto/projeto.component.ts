@@ -17,7 +17,7 @@ import { SpinnerVisibilityService } from 'ng-http-loader/services/spinner-visibi
   styleUrls: ['./projeto.component.scss']
 })
 
-export class ProjetoComponent implements OnInit { 
+export class ProjetoComponent implements OnInit {
   @ViewChild("fileInput") fileInput: any;
   projetoForm: FormGroup;
   title: string = "Novo Projeto";
@@ -27,6 +27,7 @@ export class ProjetoComponent implements OnInit {
   cidades: any;
   aArea: number[] = [];
   arquivoProjeto: any;
+  admin: boolean = false;
 
   areas = [
     {
@@ -75,16 +76,16 @@ export class ProjetoComponent implements OnInit {
   get diagnostic() { return JSON.stringify(this.projetoForm.value); }
   ativoprazo: boolean = false;
 
-  constructor(private _fb: FormBuilder, private _avRoute: ActivatedRoute, private _cidadeService: CidadeService,private spinner: SpinnerVisibilityService,
-    private alertService: MensagemService, private _arquivoService: ArquivoService,private authenticationService: AuthService,
+  constructor(private _fb: FormBuilder, private _avRoute: ActivatedRoute, private _cidadeService: CidadeService, private spinner: SpinnerVisibilityService,
+    private alertService: MensagemService, private _arquivoService: ArquivoService, private authenticationService: AuthService,
     private _projetoService: ProjetoService, private router: Router) {
-    
+
     spinner.show();
 
     if (this._avRoute.snapshot.params["id"]) {
-       this.id = this._avRoute.snapshot.params["id"];
-       this.prazo();
-    }else{
+      this.id = this._avRoute.snapshot.params["id"];
+      this.prazo();
+    } else {
       this.spinner.hide();
       this.id = 0;
     }
@@ -95,6 +96,10 @@ export class ProjetoComponent implements OnInit {
 
     if (user != null) {
       this.idInstituicao = JSON.parse(user).id;
+
+      if (JSON.parse(user).cPerfil == 'A') {
+        this.admin = true;
+      }
     }
 
   }
@@ -135,7 +140,7 @@ export class ProjetoComponent implements OnInit {
     });
 
     if (this.idInstituicao > 0) {
-      
+
       this.prazo();
 
       if (this.id > 0) {
@@ -160,12 +165,12 @@ export class ProjetoComponent implements OnInit {
         this.projetoForm.patchValue(data, { onlySelf: true });
         this.aArea = this.projetoForm.value.sArea;
 
-        if(this.projetoForm.value.arquivo[0] != null){
+        if (this.projetoForm.value.arquivo[0] != null) {
           this.arquivoProjeto = this.projetoForm.value.arquivo;
-        } else{
+        } else {
           this.arquivoProjeto = null;
-        } 
-        
+        }
+
         this.spinner.hide();
       }
         , error => this.errorHandler(error));
@@ -180,7 +185,7 @@ export class ProjetoComponent implements OnInit {
           this.alertService.success("Operação realizada com sucesso!");
           this.router.navigate(['/projeto-list']);
         }
-      },error => this.errorHandler(error));
+      }, error => this.errorHandler(error));
   }
 
   updateProjeto() {
@@ -219,8 +224,8 @@ export class ProjetoComponent implements OnInit {
       let fileToUpload = fi.files[0];
       let sizeFile = Math.round(fileToUpload.size / 1024);
 
-      if (sizeFile > 1024) {
-        alert("Tamanho maximo para o arquivo é de 1mb!");
+      if (sizeFile > 2048) {
+        alert("Tamanho maximo para o arquivo é de 2mb!");
         return;
       }
 
@@ -230,7 +235,7 @@ export class ProjetoComponent implements OnInit {
       }
 
       this._arquivoService
-        .addArquivo(fileToUpload, this.projetoForm.value.id,2)
+        .addArquivo(fileToUpload, this.projetoForm.value.id, 2)
         .subscribe(data => {
           if (data == 0) {
             this.alertService.error("Erro ao realizar a operação!");
@@ -248,7 +253,7 @@ export class ProjetoComponent implements OnInit {
 
   download(id: number, filename: string) {
     this._arquivoService
-      .download(id,2).subscribe(data => {
+      .download(id, 2).subscribe(data => {
         saveAs(data, filename);
       });
   }
@@ -273,21 +278,21 @@ export class ProjetoComponent implements OnInit {
   errorHandler(error: Response) {
 
     this.spinner.hide();
-    
-    if(error.status == 401){
-        this.alertService.error("Sua sessão expirou entre novamente com seu usuário.");
-        this.router.navigate(['/login']);
-      }else{
-        this.alertService.error("Erro ao realizar a operação!");
-      }
+
+    if (error.status == 401) {
+      this.alertService.error("Sua sessão expirou entre novamente com seu usuário.");
+      this.router.navigate(['/login']);
+    } else {
+      this.alertService.error("Erro ao realizar a operação!");
+    }
   }
 
-  prazo(){
+  prazo() {
     this.authenticationService.prazo().subscribe(
       data => {
         if (data) {
           this.ativoprazo = true;
-        } 
+        }
       },
       error => {
         this.alertService.error("Erro ao realizar a operação!");
