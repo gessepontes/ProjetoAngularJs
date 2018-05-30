@@ -188,6 +188,7 @@ export class InstituicaoComponent implements OnInit {
     
     if(error.status == 401){
         this.alertService.error("Sua sessão expirou entre novamente com seu usuário.");
+        this.authenticationService.logout();  
         this._router.navigate(['/login']);
       }else{
         this.alertService.error("Erro ao realizar a operação!");
