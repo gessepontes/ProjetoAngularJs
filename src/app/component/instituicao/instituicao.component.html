@@ -1,8 +1,8 @@
 <form [formGroup]="instituicaoForm">
   <!-- {{diagnostic}} -->
 
-  <div  class="container">
-      <h5>{{title}}</h5>
+  <div class="container">
+    <h5>{{title}}</h5>
 
     <div class="row">
       <div class="input-field col l3 m6 s12">
@@ -39,25 +39,32 @@
 
 
     <div class="row">
-      <select class="browser-default col l3 m6 s12" id="idEstado" formControlName="idEstado" (change)="getCidadeByIdEstado($event.target.value,true)" 
+      <select class="browser-default col l4 m4 s12" id="idEstado" formControlName="idEstado" (change)="getCidadeByIdEstado($event.target.value,true)"
         material-select>
         <option value="0" selected>Selecione o estado</option>
         <option *ngFor="let estado of estados" [value]="estado.iCodEstado">{{estado.sNomeEstado}}</option>
       </select>
 
-      <select class="browser-default col l3 m6 s12" id="idCidade" formControlName="idCidade" required material-select>
+      <select class="browser-default col l4 m4 s12" id="idCidade" formControlName="idCidade" required material-select>
         <option style="display:none" value="">Selecione a cidade</option>
         <option *ngFor="let cidade of cidades" [value]="cidade.iCodCidade">{{cidade.sNomeCidade}}</option>
       </select>
 
-      <select class="browser-default col l3 m6 s12" id="iRegime" formControlName="iRegime" required material-select>
+      <select class="browser-default col l4 m4 s12" id="iRegime" formControlName="iRegime" required material-select>
         <option style="display:none" value="">Selecione o regime</option>
         <option *ngFor="let regime of regimes" [value]="regime.id"> {{regime.nome}}</option>
       </select>
+    </div>
 
-      <select class="browser-default col l3 m6 s12" id="iEsfera" formControlName="iEsfera" required material-select>
-        <option style="display:none" value="">Selecione a cidade</option>
+    <div class="row">
+      <select class="browser-default col l6 m6 s12" id="iEsfera" formControlName="iEsfera" required material-select>
+        <option style="display:none" value="">Selecione a esfera</option>
         <option *ngFor="let esfera of esferas" [value]="esfera.id">{{esfera.nome}}</option>
+      </select>
+
+      <select class="browser-default col l6 m6 s12" id="iNatureza" formControlName="iNatureza" required material-select>
+        <option style="display:none" value="">Selecione a natureza da instituição</option>
+        <option *ngFor="let natureza of naturezas" [value]="natureza.id"> {{natureza.nome}}</option>
       </select>
     </div>
 
@@ -164,7 +171,7 @@
       </div>
       <div class="row">
         <label>OBS: Verificar os documentos obrigatórios no artigo 6º do Edital 01/2017.</label>
-            
+
         <table>
           <thead>
             <tr>

@@ -70,6 +70,17 @@ export class InstituicaoComponent implements OnInit {
     }
   ];
 
+  naturezas = [
+    {
+      id: 1,
+      nome: 'Entidade Pública'
+    },
+    {
+      id: 2,
+      nome: 'Organizações da Sociedade Civil'
+    }
+  ];
+
   // TODO: Remove this when we're done
   get diagnostic() { return JSON.stringify(this.instituicaoForm.value); }
 
@@ -111,6 +122,7 @@ export class InstituicaoComponent implements OnInit {
       sHomePage: ['http://', Validators.required],
       iRegime: ['', Validators.required],
       iEsfera: ['', Validators.required],
+      iNatureza: ['', Validators.required],
       sRepresentante: ['', Validators.required],
       sCpfRepresentante: ['', Validators.required],
       sCargo: ['', Validators.required],

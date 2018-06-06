@@ -36,7 +36,8 @@ export class LoginComponent implements OnInit {
       this.authService.login(this.formUser.value.cnpj, this.formUser.value.password).subscribe(
         data => {
           if (data == undefined) {
-            this.alertService.error("Cnpj ou senha não conferem!");
+            this.alertService.error("Cnpj ou senha estão incorretos!");
+            this.spinner.hide();
           } else {
             this.spinner.hide();
             this.router.navigate(['/']);
