@@ -20,6 +20,8 @@ import { saveAs } from 'file-saver';
 
 export class InstituicaoComponent implements OnInit {
   @ViewChild("fileInput") fileInput: any;
+  @ViewChild("textInput") textInput: any;
+
   instituicaoForm: FormGroup;
   private formSubmitAttempt: boolean;
   title: string = "Nova instituição";
@@ -77,7 +79,7 @@ export class InstituicaoComponent implements OnInit {
     },
     {
       id: 2,
-      nome: 'Organizações da Sociedade Civil'
+      nome: 'Organização da Sociedade Civil'
     }
   ];
 
@@ -115,11 +117,11 @@ export class InstituicaoComponent implements OnInit {
       sEndereco: ['', Validators.required],
       sCep: ['', Validators.required],
       sTelefone: ['', Validators.required],
-      sFax: ['', Validators.required],
+      sFax: [''],
       idEstado: 0,
       idCidade: ['', Validators.required],
       sEmail: ['', Validators.required],
-      sHomePage: ['http://', Validators.required],
+      sHomePage: ['http://'],
       iRegime: ['', Validators.required],
       iEsfera: ['', Validators.required],
       iNatureza: ['', Validators.required],
@@ -130,15 +132,16 @@ export class InstituicaoComponent implements OnInit {
       sRG: ['', Validators.required],
       sOrgaoExpedidor: ['', Validators.required],
       sEnderecoRepresentante: ['', Validators.required],
-      sTelefoneRepresentante: ['', Validators.required],
+      sTelefoneRepresentante:'',
       sCepRepresentante: ['', Validators.required],
       sCoordenador: ['', Validators.required],
       sCPFCoordenador: ['', Validators.required],
-      sTelefoneCoordenador: ['', Validators.required],
-      sFaxCoordenador: ['', Validators.required],
+      sTelefoneCoordenador: '',
       arquivo: null,
       sSenha: '',
-      sConfirmaSenha: ''
+      sConfirmaSenha: '',
+      sCelularRepresentante : '',
+      sCelularCoordenador : ''
     });
 
     if (this.id > 0) {
@@ -281,11 +284,15 @@ export class InstituicaoComponent implements OnInit {
 
     if (this.instituicaoForm.valid) {
       if (this.testSenha()) {
-        if (this.instituicaoForm.value.id == 0) {
-          this.addInstituicao();
-        }
-        else {
-          this.updateInstituicao();
+        if(this.instituicaoForm.value.idCidade == ''){
+          this.alertService.error("Cidade é um campo obrigatório.");
+        }else{
+          if (this.instituicaoForm.value.id == 0) {
+            this.addInstituicao();
+          }
+          else {
+            this.updateInstituicao();
+          }
         }
       }
     }
@@ -310,6 +317,11 @@ export class InstituicaoComponent implements OnInit {
         return;
       }
 
+      if (fileToUpload.name.length > 250) {
+        alert("O nome do arquivo é superior a 250 caracteres!");
+        return;
+      }
+
       this._arquivoService
         .addArquivo(fileToUpload, this.instituicaoForm.value.id,1)
         .subscribe(data => {
@@ -321,6 +333,8 @@ export class InstituicaoComponent implements OnInit {
           }
         });
 
+        this.fileInput.nativeElement.value = "";
+        this.textInput.nativeElement.value = "";
 
     } else {
       alert("Selecione algum arquivo!");
@@ -353,6 +367,10 @@ export class InstituicaoComponent implements OnInit {
 
   back() {
     this._router.navigate(['/']);
+  }
+
+  cancel() {
+    this._router.navigate(['/home']);
   }
 
   prazo(){

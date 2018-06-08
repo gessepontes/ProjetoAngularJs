@@ -6,7 +6,7 @@
 
     <div class="row">
       <div class="input-field col l12 m12 s12">
-        <input id="sTitulo" type="text" formControlName="sTitulo" placeholder="Titulo" class="validate" required>
+        <input id="sTitulo" type="text" formControlName="sTitulo" placeholder="Titulo" class="validate" maxlength="300" required>
         <label class="active" for="sTitulo">Titulo</label>
       </div>
     </div>
@@ -50,9 +50,9 @@
         <label for="mValor" class="active">Valor</label>
       </div>
 
-      <div class="input-field col l3 m6 s12">
-        <input id="mValorContraPartida" type="text" formControlName="mValorContraPartida" placeholder="Valor da contra partida" class="validate"
-          kzMaskCurrency required>
+      <div class="input-field col l3 m6 s12" *ngIf="valorContra">
+        <input id="mValorContraPartida" type="text" formControlName="mValorContraPartida" placeholder="Valor da contra partida" class="validate" required
+          kzMaskCurrency>
         <label for="mValorContraPartida" class="active">Valor da contra partida</label>
       </div>
     </div>
@@ -67,8 +67,8 @@
 
     <div class="row">
       <div class="input-field col l12 m12 s12">
-        <textarea id="tResumo" formControlName="tResumo" placeholder="Resumo" class="materialize-textarea"></textarea>
-        <label for="tResumo" class="active">Resumo</label>
+        <textarea id="tResumo" formControlName="tResumo" placeholder="Objeto" class="materialize-textarea"></textarea>
+        <label for="tResumo" class="active">Objeto</label>
       </div>
     </div>
 
@@ -92,7 +92,7 @@
           </div>
 
           <div class="file-path-wrapper">
-            <input class="file-path validate" type="text" placeholder="Upload file" />
+            <input class="file-path validate" type="text" placeholder="Upload file" #textInput />
           </div>
         </div>
 
@@ -103,7 +103,6 @@
       </div>
       <div class="row">
         <label>OBS: Verificar os documentos obrigatórios no artigo 6º do Edital 01/2017.</label>
-
         <table>
           <thead>
             <tr>
@@ -138,7 +137,7 @@
     <div class="row">
       <div class="input-field col s12">
         <a class="btn" (click)="save()" [attr.disabled]="!projetoForm.valid?'':null" *ngIf="ativoprazo && !admin">Salvar</a>
-        <a class="btn" (click)="cancel()">Voltar</a>
+        <a class="btn" (click)="cancel()">Cancelar</a>
       </div>
     </div>
   </form>

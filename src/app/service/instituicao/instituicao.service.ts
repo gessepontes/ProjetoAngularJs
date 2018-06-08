@@ -29,4 +29,12 @@ export class InstituicaoService {
             .map((response: Response) => response.json())
             .catch(this._httpClient.errorHandler);
     }
+
+    getValorContra(id: number) {
+        return this._httpClient.get(this.myAppUrl + "Instituicao/GetValorContra/" + id, localStorage.getItem('token'))
+            .map((response: Response) => {
+                return response.json();
+            })
+            .catch(this._httpClient.errorHandler)
+      }
 }

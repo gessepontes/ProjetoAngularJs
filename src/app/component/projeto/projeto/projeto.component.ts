@@ -10,6 +10,7 @@ import { ArquivoService } from '../../../service/arquivo/arquivo.service'
 import { saveAs } from 'file-saver';
 import { AuthService } from '../../../service/auth/auth.service';
 import { SpinnerVisibilityService } from 'ng-http-loader/services/spinner-visibility.service';
+import { InstituicaoService } from '../../../service/instituicao/instituicao.service';
 
 @Component({
   selector: 'projeto',
@@ -19,6 +20,8 @@ import { SpinnerVisibilityService } from 'ng-http-loader/services/spinner-visibi
 
 export class ProjetoComponent implements OnInit {
   @ViewChild("fileInput") fileInput: any;
+  @ViewChild("textInput") textInput: any;
+
   projetoForm: FormGroup;
   title: string = "Novo Projeto";
   id: number;
@@ -28,6 +31,7 @@ export class ProjetoComponent implements OnInit {
   aArea: number[] = [];
   arquivoProjeto: any;
   admin: boolean = false;
+  valorContra: boolean = false;
 
   areas = [
     {
@@ -77,7 +81,7 @@ export class ProjetoComponent implements OnInit {
   ativoprazo: boolean = false;
 
   constructor(private _fb: FormBuilder, private _avRoute: ActivatedRoute, private _cidadeService: CidadeService, private spinner: SpinnerVisibilityService,
-    private alertService: MensagemService, private _arquivoService: ArquivoService, private authenticationService: AuthService,
+    private alertService: MensagemService, private _arquivoService: ArquivoService, private authenticationService: AuthService, private _instituicaoService: InstituicaoService,
     private _projetoService: ProjetoService, private router: Router) {
 
     spinner.show();
@@ -96,7 +100,7 @@ export class ProjetoComponent implements OnInit {
 
     if (user != null) {
       this.idInstituicao = JSON.parse(user).id;
-
+      this.getValorContra();
       if (JSON.parse(user).cPerfil == 'A') {
         this.admin = true;
       }
@@ -107,6 +111,13 @@ export class ProjetoComponent implements OnInit {
   getCidadeByIdEstado(id: number) {
     this._cidadeService.getCidadeByIdEstado(id)
       .subscribe(data => this.cidades = data
+        , error => this.errorHandler(error));
+  }
+
+
+  getValorContra() {
+    this._instituicaoService.getValorContra(this.idInstituicao)
+      .subscribe(data => this.valorContra = data
         , error => this.errorHandler(error));
   }
 
@@ -132,7 +143,7 @@ export class ProjetoComponent implements OnInit {
       dDataInicio: ['', Validators.required],
       dDataTermino: ['', Validators.required],
       mValor: ['', Validators.required],
-      mValorContraPartida: ['', Validators.required],
+      mValorContraPartida: '',
       tResumo: ['', Validators.required],
       idCidade: ['', Validators.required],
       sArea: null,
@@ -205,6 +216,10 @@ export class ProjetoComponent implements OnInit {
     this.projetoForm.value.IDInstituicao = this.idInstituicao;
     this.projetoForm.value.sArea = this.aArea;
 
+    if (this.projetoForm.value.mValorContraPartida == '') {
+      this.projetoForm.value.mValorContraPartida = 0;
+    }
+
     if (this.projetoForm.value.id == 0) {
       this.addProjeto();
     }
@@ -234,6 +249,11 @@ export class ProjetoComponent implements OnInit {
         return;
       }
 
+      if (fileToUpload.name.length > 250) {
+        alert("O nome do arquivo é superior a 250 caracteres!");
+        return;
+      }
+
       this._arquivoService
         .addArquivo(fileToUpload, this.projetoForm.value.id, 2)
         .subscribe(data => {
@@ -245,6 +265,8 @@ export class ProjetoComponent implements OnInit {
           }
         }, error => this.errorHandler(error));
 
+      this.fileInput.nativeElement.value = "";
+      this.textInput.nativeElement.value = "";
 
     } else {
       alert("Selecione algum arquivo!");

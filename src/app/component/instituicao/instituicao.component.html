@@ -11,14 +11,14 @@
       </div>
 
       <div class="input-field col l9 m6 s12">
-        <input id="sProponente" type="text" formControlName="sProponente" class="validate" required>
+        <input id="sProponente" type="text" formControlName="sProponente" class="validate" maxlength="100" required>
         <label for="sProponente" class="active">Proponente</label>
       </div>
     </div>
 
     <div class="row">
       <div class="input-field col l4 m6 s12">
-        <input id="sEndereco" type="text" formControlName="sEndereco" class="validate" required>
+        <input id="sEndereco" type="text" formControlName="sEndereco" class="validate" maxlength="100" required>
         <label for="sEndereco" class="active">Endereço</label>
       </div>
       <div class="input-field col l2 m6 s12">
@@ -32,7 +32,7 @@
       </div>
 
       <div class="input-field col l3 m6 s12">
-        <input id="sFax" type="tel" formControlName="sFax" class="validate" kzMask="(99) 9999-9999" required>
+        <input id="sFax" type="tel" formControlName="sFax" class="validate" kzMask="(99) 9999-9999">
         <label for="sFax" class="active">Fax</label>
       </div>
     </div>
@@ -70,18 +70,18 @@
 
     <div class="row">
       <div class="input-field col l6 m6 s12">
-        <input id="sEmail" type="email" formControlName="sEmail" class="validate" required>
+        <input id="sEmail" type="email" formControlName="sEmail" class="validate" maxlength="100" required>
         <label for="sEmail" class="active">Email</label>
       </div>
       <div class="input-field col l6 m6 s12">
-        <input id="sHomePage" type="url" formControlName="sHomePage" class="validate" required>
+        <input id="sHomePage" type="url" formControlName="sHomePage" maxlength="100" class="validate">
         <label for="sHomePage" class="active">HomePage</label>
       </div>
     </div>
 
     <div class="row">
       <div class="input-field col l6 m6 s12">
-        <input id="sRepresentante" type="text" formControlName="sRepresentante" class="validate" required>
+        <input id="sRepresentante" type="text" formControlName="sRepresentante" class="validate" maxlength="100" required>
         <label for="sRepresentante" class="active">Representante</label>
       </div>
       <div class="input-field col l2 m6 s12">
@@ -90,65 +90,70 @@
       </div>
 
       <div class="input-field col l2 m6 s12">
-        <input id="sRG" type="text" formControlName="sRG" class="validate" required>
+        <input id="sRG" type="text" formControlName="sRG" class="validate" maxlength="20" required>
         <label for="sRG" class="active">RG do representante</label>
       </div>
 
       <div class="input-field col l2 m6 s12">
-        <input id="sOrgaoExpedidor" type="text" formControlName="sOrgaoExpedidor" class="validate" required>
+        <input id="sOrgaoExpedidor" type="text" formControlName="sOrgaoExpedidor" maxlength="10" class="validate" required>
         <label for="sOrgaoExpedidor" class="active">Orgão expedidor</label>
       </div>
     </div>
 
     <div class="row">
       <div class="input-field col l6 m6 s12">
-        <input id="sCargo" type="text" formControlName="sCargo" class="validate" required>
+        <input id="sCargo" type="text" formControlName="sCargo" maxlength="100" class="validate" required>
         <label for="sCargo" class="active">Cargo</label>
       </div>
       <div class="input-field col l6 m6 s12">
-        <input id="sFuncao" type="text" formControlName="sFuncao" class="validate" required>
+        <input id="sFuncao" type="text" formControlName="sFuncao" maxlength="100" class="validate" required>
         <label for="sFuncao" class="active">Função</label>
       </div>
     </div>
 
     <div class="row">
-      <div class="input-field col l6 m6 s12">
-        <input id="sEnderecoRepresentante" type="text" formControlName="sEnderecoRepresentante" class="validate" required>
+      <div class="input-field col l4 m6 s12">
+        <input id="sEnderecoRepresentante" type="text" formControlName="sEnderecoRepresentante" maxlength="100" class="validate"
+          required>
         <label for="sEnderecoRepresentante" class="active">Endereço do representante</label>
       </div>
 
-      <div class="input-field col l3 m6 s12">
+      <div class="input-field col l2 m6 s12">
         <input id="sCepRepresentante" type="text" formControlName="sCepRepresentante" class="validate" kzMask="99999-999" required>
         <label for="sCepRepresentante" class="active">Cep do representante</label>
       </div>
 
       <div class="input-field col l3 m6 s12">
-        <input id="sTelefoneRepresentante" type="tel" formControlName="sTelefoneRepresentante" class="validate" kzMask="(99) 9999-9999"
-          required>
+        <input id="sTelefoneRepresentante" type="tel" formControlName="sTelefoneRepresentante" class="validate" kzMask="(99) 9999-9999">
         <label for="sTelefoneRepresentante" class="active">Telefone do representante</label>
       </div>
+
+      <div class="input-field col l3 m6 s12">
+          <input id="sCelularRepresentante" type="tel" formControlName="sCelularRepresentante" class="validate" kzMask="(99) 9999-99999">
+          <label for="sCelularRepresentante" class="active">Celular do representante</label>
+        </div>
     </div>
 
     <div class="row">
-      <div class="input-field col l6 m6 s12">
-        <input id="sCoordenador" type="text" formControlName="sCoordenador" class="validate" required>
+      <div class="input-field col l4 m6 s12">
+        <input id="sCoordenador" type="text" formControlName="sCoordenador" maxlength="100" class="validate" required>
         <label for="sCoordenador" class="active">Coordenador</label>
       </div>
+
       <div class="input-field col l2 m6 s12">
         <input id="sCPFCoordenador" type="text" formControlName="sCPFCoordenador" class="validate" kzMask="999.999.999-99" required>
         <label for="sCPFCoordenador" class="active">Cpf do coordenador</label>
       </div>
 
-      <div class="input-field col l2 m6 s12">
-        <input id="sTelefoneCoordenador" type="tel" formControlName="sTelefoneCoordenador" class="validate" kzMask="(99) 9999-9999"
-          required>
-        <label for="sTelefoneCoordenador" class="active">Telefone</label>
+      <div class="input-field col l3 m6 s12">
+        <input id="sTelefoneCoordenador" type="tel" formControlName="sTelefoneCoordenador" class="validate" kzMask="(99) 9999-9999">
+        <label for="sTelefoneCoordenador" class="active">Telefone do coordenador</label>
       </div>
 
-      <div class="input-field col l2 m6 s12">
-        <input id="sFaxCoordenador" type="tel" formControlName="sFaxCoordenador" class="validate" kzMask="(99) 9999-9999" required>
-        <label for="sFaxCoordenador" class="active">Fax</label>
-      </div>
+      <div class="input-field col l3 m6 s12">
+          <input id="sCelularCoordenador" type="tel" formControlName="sCelularCoordenador" class="validate" kzMask="(99) 9999-99999">
+          <label for="sCelularCoordenador" class="active">Celular do coordenador</label>
+      </div>      
     </div>
 
     <div *ngIf="id !=0">
@@ -160,7 +165,7 @@
           </div>
 
           <div class="file-path-wrapper">
-            <input class="file-path validate" type="text" placeholder="Upload file" />
+            <input class="file-path validate" type="text" placeholder="Upload file" #textInput />
           </div>
         </div>
 
@@ -202,10 +207,15 @@
       </div>
     </div>
 
+    <div class="row" *ngIf="ativo">
+        <h5 class="col l12 m12 s12">Alterar Senha</h5>
+    </div>
+
     <div class="row">
       <div class="input-field col l6 m6 s12">
         <input id="sSenha" type="password" formControlName="sSenha" class="validate">
-        <label for="sSenha">Senha</label>
+        <label for="sSenha" *ngIf="!ativo">Senha</label>
+        <label for="sSenha" *ngIf="ativo">Nova Senha</label>
       </div>
       <div class="input-field col l6 m6 s12">
         <input id="sConfirmaSenha" type="password" formControlName="sConfirmaSenha" class="validate">
@@ -217,6 +227,7 @@
       <div class="input-field col s12" *ngIf="ativoprazo">
         <a class="btn" (click)="save()" [attr.disabled]="!instituicaoForm.valid?'':null">Salvar</a>
         <a class="btn" *ngIf="!ativo" (click)="back()">Voltar</a>
+        <a class="btn" *ngIf="ativo" (click)="cancel()">Cancelar</a>
       </div>
     </div>
   </div>
