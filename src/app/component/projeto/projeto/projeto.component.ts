@@ -122,11 +122,16 @@ export class ProjetoComponent implements OnInit {
   }
 
   sArea(id: number) {
-    if (this.aArea.find(x => x === id)) {
-      const index: number = this.aArea.indexOf(id);
-      if (index !== -1) {
-        this.aArea.splice(index, 1);
-      }
+    if (this.aArea.find(x => x == id)) {
+
+      this.aArea.forEach((item, index) => {
+        console.log(item); // 9, 2, 5
+        console.log(index); // 0, 1, 2
+
+        if (index != -1 && item == id) {
+          this.aArea.splice(index, 1);
+        }
+      });
     } else {
       this.aArea.push(id);
     }

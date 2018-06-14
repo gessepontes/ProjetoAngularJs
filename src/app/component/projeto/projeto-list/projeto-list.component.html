@@ -22,10 +22,10 @@
                 <th>{{ emp.sNoProcesso }}</th>
                 <th>{{ emp.dDataCadastro | date: 'dd/MM/yyyy' }}</th>
                 <th align="center">
-                    <a [routerLink]="['/projeto/edit/', emp.id]">
+                    <a [routerLink]="['/projeto/edit/', emp.id]" title="Visualizar / Editar projeto">
                         <i class="material-icons">edit</i>
                     </a>
-                    <a (click)="delete(emp.id)" *ngIf="ativoprazo && !admin">
+                    <a href="javascript:void(0);" (click)="delete(emp.id)" *ngIf="ativoprazo && !admin" title="Excluir projeto">
                         <i class="material-icons">delete</i>
                     </a>
                 </th>

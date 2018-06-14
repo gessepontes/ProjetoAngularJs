@@ -165,7 +165,7 @@
           </div>
 
           <div class="file-path-wrapper">
-            <input class="file-path validate" type="text" placeholder="Upload file" #textInput />
+            <input class="file-path validate" type="text" placeholder="Selecionar arquivo" #textInput />
           </div>
         </div>
 
@@ -189,10 +189,10 @@
             <tr *ngFor="let emp of arquivoInstituicao">
               <th>{{emp.sNome}}</th>
               <th align="center">
-                <a (click)="download(emp.id,emp.sNome)">
+                <a (click)="download(emp.id,emp.sNome)" title="Download do arquivo">
                   <i class="material-icons">cloud_download</i>
                 </a>
-                <a (click)="delete(emp.id)" *ngIf="ativoprazo">
+                <a href="javascript:void(0);" (click)="delete(emp.id)" *ngIf="ativoprazo" title="Excluir arquivo">
                   <i class="material-icons">delete</i>
                 </a>
               </th>
