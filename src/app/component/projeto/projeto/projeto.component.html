@@ -51,8 +51,8 @@
       </div>
 
       <div class="input-field col l3 m6 s12" *ngIf="valorContra">
-        <input id="mValorContraPartida" type="text" formControlName="mValorContraPartida" placeholder="Valor da contra partida" class="validate" required
-          kzMaskCurrency>
+        <input id="mValorContraPartida" type="text" formControlName="mValorContraPartida" placeholder="Valor da contra partida" class="validate"
+          required kzMaskCurrency>
         <label for="mValorContraPartida" class="active">Valor da contra partida</label>
       </div>
     </div>
@@ -74,12 +74,15 @@
 
     <div class="row">
       <div class="form-group col l12 m12 s12">
-        <label>
-          Anexar os formulários (anexo I e II) do MANUAL BÁSICO PRA APRESENTAÇÃO DE PROJETOS em formato PDF devidamente assinados e
-          autenticados. Consultar Manual Básico para o preenchimento.
-        </label>
-
-        <a target="_self" href="assets/doc/Anexos.doc" download="Anexos.doc">Baixar Formulário</a>
+        <label>ATENÇÃO!</label>
+        <br>
+        <br>
+        <label>SALVE o Projeto uma primeira vez, para poder anexar os arquivos relacionados ao projeto exigidos no edital (em formato
+          PDF, devidamente assinados e autenticados)</label>
+        <br>
+        <br>
+        <label>LEMBRE-SE de ler atentamente a seção "INSTRUÇÕES PARA PREENCHIMENTO DOS FORMULÁRIOS DO PROJETO" do Anexo I do edital
+          antes de produzir a documentação e anexá-la aqui. </label>
       </div>
     </div>
 
@@ -101,21 +104,23 @@
         </div>
 
       </div>
+
       <div class="row">
-        <label>OBS: Verificar os documentos obrigatórios no artigo 6º do Edital 01/2017.</label>
+        <h5 class="col l12 m12 s12">Arquivos</h5>
+
         <table>
-          <thead>
-            <tr>
-              <th>Arquivo</th>
-              <th></th>
-            </tr>
-          </thead>
+            <thead>
+                <tr>
+                  <th style="width: 90%"></th>
+                  <th style="width: 10%"></th>
+                </tr>
+              </thead>
 
           <tbody>
             <tr *ngFor="let emp of arquivoProjeto">
               <th>{{emp.sNome}}</th>
-              <th  align="center">
-                <a (click)="download(emp.id,emp.sNome)" title="Download do arquivo">
+              <th align="center">
+                <a href="javascript:void(0);" (click)="download(emp.id,emp.sNome)" title="Download do arquivo">
                   <i class="material-icons">cloud_download</i>
                 </a>
                 <a href="javascript:void(0);" (click)="delete(emp.id)" *ngIf="ativoprazo && !admin" title="Excluir arquivo">
@@ -131,6 +136,7 @@
 
         </table>
       </div>
+
     </div>
 
 

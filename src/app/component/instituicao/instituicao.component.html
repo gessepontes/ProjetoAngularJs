@@ -175,21 +175,21 @@
 
       </div>
       <div class="row">
-        <label>OBS: Verificar os documentos obrigatórios no artigo 6º do Edital 01/2017.</label>
-
+          <h5 class="col l12 m12 s12">Arquivos</h5>
+          
         <table>
-          <thead>
-            <tr>
-              <th>Arquivo</th>
-              <th></th>
-            </tr>
-          </thead>
+            <thead>
+                <tr>
+                  <th style="width: 90%"></th>
+                  <th style="width: 10%"></th>
+                </tr>
+              </thead>
 
           <tbody>
             <tr *ngFor="let emp of arquivoInstituicao">
               <th>{{emp.sNome}}</th>
               <th align="center">
-                <a (click)="download(emp.id,emp.sNome)" title="Download do arquivo">
+                <a href="javascript:void(0);" (click)="download(emp.id,emp.sNome)" title="Download do arquivo">
                   <i class="material-icons">cloud_download</i>
                 </a>
                 <a href="javascript:void(0);" (click)="delete(emp.id)" *ngIf="ativoprazo" title="Excluir arquivo">
@@ -219,7 +219,7 @@
       </div>
       <div class="input-field col l6 m6 s12">
         <input id="sConfirmaSenha" type="password" formControlName="sConfirmaSenha" class="validate">
-        <label for="sConfirmaSenha">Confirma Senha</label>
+        <label for="sConfirmaSenha">Confirmar Nova Senha</label>
       </div>
     </div>
 
