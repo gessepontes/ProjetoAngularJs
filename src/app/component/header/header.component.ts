@@ -2,6 +2,7 @@ import { Observable } from 'rxjs/Observable';
 import { AuthService } from './../../service/auth/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Http } from '@angular/http';
 
 @Component({
   selector: 'app-header',
@@ -11,11 +12,17 @@ import { Router } from '@angular/router';
 export class HeaderComponent implements OnInit {
 
   isLoggedIn$: Observable<boolean>;                
+  versaoDesenv : any;
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router,private _http: Http) { }
 
   ngOnInit() {
     this.isLoggedIn$ = this.authService.isLoggedIn; 
+
+     this._http.get('assets/appsettings.json')
+     .subscribe(res => {
+       this.versaoDesenv = res.json().versaoDesenv
+     });
   }
 
   onLogout() {

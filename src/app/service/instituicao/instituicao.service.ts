@@ -36,5 +36,11 @@ export class InstituicaoService {
                 return response.json();
             })
             .catch(this._httpClient.errorHandler)
-      }
+    }
+
+    getTestCnpj(cnpj: string) {
+            return this._httpClient.get(this.myAppUrl + 'Instituicao/GetTestCnpj/' + cnpj, "")
+            .map((response: Response) => response.json())
+            .catch(this._httpClient.errorHandler)            
+    }    
 }

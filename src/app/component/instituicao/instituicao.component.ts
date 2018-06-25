@@ -288,7 +288,7 @@ export class InstituicaoComponent implements OnInit {
           this.alertService.error("Cidade é um campo obrigatório.");
         }else{
           if (this.instituicaoForm.value.id == 0) {
-            this.addInstituicao();
+            this.getTestCnpj();            
           }
           else {
             this.updateInstituicao();
@@ -298,6 +298,19 @@ export class InstituicaoComponent implements OnInit {
     }
 
     this.formSubmitAttempt = true;   
+  }
+
+  getTestCnpj() {
+    this._instituicaoService.getTestCnpj(this.instituicaoForm.value.sCNPJ)
+      .subscribe(data => {
+        if (!data) {
+          this.addInstituicao();
+        }
+        else {
+          this.alertService.error("Foi constatado que esse CNPJ já encontra-se cadastrado na nossa base de dados, por favor verifique a numeração.");
+        }
+      }
+        , error => this.errorHandler(error));
   }
 
   addFile(): void {
