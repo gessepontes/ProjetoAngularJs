@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Http, Headers } from '@angular/http';
-import { NgForm, FormBuilder, Validators, FormControl, FormGroup } from '@angular/forms';
+import { DatePipe } from '@angular/common'
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ProjetoListComponent } from '../projeto-list/projeto-list.component';
+
 import { CidadeService } from '../../../service/cidade/cidade.service'
 import { ProjetoService } from '../../../service/projeto/projeto.service'
 import { MensagemService } from '../../../service/mensagem/mensagem.service';
@@ -69,10 +69,6 @@ export class ProjetoComponent implements OnInit {
     {
       id: 9,
       nome: 'Direitos Difusos'
-    },
-    {
-      id: 10,
-      nome: 'Reaparelhamento e modernização do ministério público do estado do ceará e órgãos estaduais de execução e de apoio.'
     }
   ]
 
@@ -80,7 +76,7 @@ export class ProjetoComponent implements OnInit {
   get diagnostic() { return JSON.stringify(this.projetoForm.value); }
   ativoprazo: boolean = false;
 
-  constructor(private _fb: FormBuilder, private _avRoute: ActivatedRoute, private _cidadeService: CidadeService, private spinner: SpinnerVisibilityService,
+  constructor(private _fb: FormBuilder, private _avRoute: ActivatedRoute, private _cidadeService: CidadeService, private spinner: SpinnerVisibilityService,public datepipe: DatePipe,
     private alertService: MensagemService, private _arquivoService: ArquivoService, private authenticationService: AuthService, private _instituicaoService: InstituicaoService,
     private _projetoService: ProjetoService, private router: Router) {
 
@@ -106,6 +102,29 @@ export class ProjetoComponent implements OnInit {
       }
     }
 
+  }
+
+  private dateOptions = this.getDefaultPickaOption();
+
+  private getDefaultPickaOption(): any {
+    return {
+      monthsFull: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+      monthsShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+      weekdaysFull: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sabádo'],
+      weekdaysShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
+      weekdaysAbbrev: [ 'D', 'S', 'T', 'Q', 'Q', 'S', 'S' ],
+      today: 'Hoje',
+      clear: 'Limpar',
+      close: 'Pronto',
+      labelMonthNext: 'Próximo mês',
+      labelMonthPrev: 'Mês anterior',
+      labelMonthSelect: 'Selecione um mês',
+      labelYearSelect: 'Selecione um ano',
+      format: 'yyyy-mm-dd',
+      editable: false,
+      // closeOnSelect: true,
+      selectYears: 15
+    };
   }
 
   getCidadeByIdEstado(id: number) {
@@ -175,8 +194,9 @@ export class ProjetoComponent implements OnInit {
     this._projetoService.getProjetoById(id)
       .subscribe((data) => {
 
-        data.dDataInicio = data.dDataInicio.substr(0, 10);
-        data.dDataTermino = data.dDataTermino.substr(0, 10);
+        data.dDataInicio = this.datepipe.transform(data.dDataInicio, 'yyyy-MM-dd');
+        data.dDataTermino = this.datepipe.transform(data.dDataTermino, 'yyyy-MM-dd');
+        //data.dDataTermino = data.dDataTermino.substr(0, 10);
 
         this.projetoForm.patchValue(data, { onlySelf: true });
         this.aArea = this.projetoForm.value.sArea;
@@ -199,7 +219,7 @@ export class ProjetoComponent implements OnInit {
           this.alertService.error("Erro ao realizar a operação!");
         } else {
           this.alertService.success("Operação realizada com sucesso!");
-          this.router.navigate(['/projeto-list']);
+          this.router.navigate(['/projeto/edit/' + data]);
         }
       }, error => this.errorHandler(error));
   }
@@ -220,6 +240,23 @@ export class ProjetoComponent implements OnInit {
 
     this.projetoForm.value.IDInstituicao = this.idInstituicao;
     this.projetoForm.value.sArea = this.aArea;
+
+
+    // this.projetoForm.value.dDataInicio = this.datepipe.transform(this.projetoForm.value.dDataInicio, 'yyyy-MM-dd')
+    // this.projetoForm.value.dDataTermino = this.datepipe.transform(this.projetoForm.value.dDataTermino, 'yyyy-MM-dd')
+
+    let dDataInicio = new Date(this.projetoForm.value.dDataInicio);
+    let dDataTermino = new Date(this.projetoForm.value.dDataTermino);
+
+    if (this.projetoForm.value.dDataInicio < '2019-01-01') {
+      this.alertService.success("A data inicial não deve ser inferior a 01/01/2019.");
+      return false;
+    }
+
+    if (this.projetoForm.value.dDataTermino > '2019-12-31' || dDataTermino < dDataInicio) {
+      this.alertService.success("A data de termino não deve ser superior a 31/12/2019 ou inferior a data de inicio!");
+      return false;
+    }
 
     if (this.projetoForm.value.mValorContraPartida == '') {
       this.projetoForm.value.mValorContraPartida = 0;
@@ -244,8 +281,8 @@ export class ProjetoComponent implements OnInit {
       let fileToUpload = fi.files[0];
       let sizeFile = Math.round(fileToUpload.size / 1024);
 
-      if (sizeFile > 2048) {
-        alert("Tamanho maximo para o arquivo é de 2mb!");
+      if (sizeFile > 10240) {
+        alert("Tamanho maximo para o arquivo é de 10mb!");
         return;
       }
 

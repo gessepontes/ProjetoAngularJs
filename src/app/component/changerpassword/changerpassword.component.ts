@@ -18,8 +18,8 @@ export class ChangerpasswordComponent implements OnInit {
   constructor(private fb: FormBuilder, private router: Router, private _avRoute: ActivatedRoute,
     private authService: AuthService, private alertService: MensagemService) {
 
-    if (this._avRoute.snapshot.params["cnpj"]) {
-      this.cnpj = this._avRoute.snapshot.params["cnpj"];
+    if (this._avRoute.snapshot.params['cnpj']) {
+      this.cnpj = this._avRoute.snapshot.params['cnpj'];
     } else {
       this.cnpj = '';
     }
@@ -42,7 +42,7 @@ export class ChangerpasswordComponent implements OnInit {
         if (data != null) {
           this.formChanger.patchValue(data, { onlySelf: true });
         } else {
-          this.alertService.error("A senha já foi modificada com este hash ou ocorreu um erro no servidor, solicite um novo email de reset de senha!");
+          this.alertService.error('A senha já foi modificada com este hash ou ocorreu um erro no servidor!');
           this.router.navigate(['/']);
         }
       }
@@ -54,19 +54,17 @@ export class ChangerpasswordComponent implements OnInit {
       if (this.formChanger.valid) {
         this.authService.changerPassword(this.formChanger.value.sCnpj, this.formChanger.value.sSenha).subscribe(
           data => {
-            if (data == 1) {
-              this.alertService.error("O prazo para mudança de senha foi expirado, solicite uma nova alteração!");
-            }
-            else if (data == 2) {
-              this.alertService.error("Erro ao realizar a operação!");
-            }
-            else {
-              this.alertService.error("Operação realizada com sucesso!");
+            if (data === 1) {
+              this.alertService.error('O prazo para mudança de senha foi expirado, solicite uma nova alteração!');
+            } else if (data === 2) {
+              this.alertService.error('Erro ao realizar a operação!');
+            } else {
+              this.alertService.error('Operação realizada com sucesso!');
               this.router.navigate(['/']);
             }
           },
           error => {
-            this.alertService.error("Erro ao realizar a operação!");
+            this.alertService.error('Erro ao realizar a operação!');
           });
       }
     }
@@ -75,21 +73,14 @@ export class ChangerpasswordComponent implements OnInit {
   testSenha() {
 
     let teste = true;
-    var pattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
+    const pattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
 
-    if (this.formChanger.value.sSenha != this.formChanger.value.sConfirmaSenha) {
+    if (this.formChanger.value.sSenha !== this.formChanger.value.sConfirmaSenha) {
       alert('A senha e a confimação da senha não são iguais.');
       teste = false;
     } else {
-      ///^
-      //    (?=.*\d)          // should contain at least one digit
-      //    (?=.*[a - z])       // should contain at least one lower case
-      //    (?=.*[A - Z])       // should contain at least one upper case
-      //[a - zA - Z0 - 9]{8,}   // should contain at least 8 from the mentioned characters
-      //$ /
-
       if (!pattern.test(this.formChanger.value.sSenha)) {
-        alert('A senha precisa ter no minimo 8 caracteres e ser composta de letras(sendo necessário ter no minimo um caractere maiusculo e um minusculo) e números.');
+        alert('A senha precisa ter no minimo 8 caracteres e ser composta por letras e números sendo maiusculo e um minusculo.');
         teste = false;
       }
     }

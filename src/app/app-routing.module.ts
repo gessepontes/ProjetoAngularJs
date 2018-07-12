@@ -15,7 +15,7 @@ const routes: Routes = [
   { path: 'projeto-list', component: ProjetoListComponent, canActivate: [AuthGuard] },
   { path: 'projeto/edit/:id', component: ProjetoComponent, canActivate: [AuthGuard] },
   { path: 'projeto', component: ProjetoComponent, canActivate: [AuthGuard] },
-  { path: 'instituicao', component: InstituicaoComponent, canActivate: [AuthGuard] },  
+  { path: 'instituicao', component: InstituicaoComponent, canActivate: [AuthGuard] },
   { path: 'instituicao-new', component: InstituicaoComponent },
   { path: 'forgot', component: ForgotComponent },
   { path: 'changerpassword/:cnpj', component: ChangerpasswordComponent },
@@ -27,4 +27,5 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
+
 export class AppRoutingModule { }

@@ -1,7 +1,14 @@
 .addFile{
     margin-top: 25px;
+    text-align: right;
 }
 
 .cursorMao{
     cursor: pointer;
 }
+
+td, th {
+     padding: 1px 5px;
+     font-weight: normal;
+}
+

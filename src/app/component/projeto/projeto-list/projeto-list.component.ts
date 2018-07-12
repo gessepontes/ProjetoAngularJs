@@ -19,7 +19,7 @@ export class ProjetoListComponent {
     user;
 
     // array of all items to be paged
-    private allItems: any[];
+    allItems: any[];
  
     // pager object
     pager: any = {};

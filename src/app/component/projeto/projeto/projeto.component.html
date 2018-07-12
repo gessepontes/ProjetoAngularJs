@@ -6,8 +6,8 @@
 
     <div class="row">
       <div class="input-field col l12 m12 s12">
-        <input id="sTitulo" type="text" formControlName="sTitulo" placeholder="Titulo" class="validate" maxlength="300" required>
-        <label class="active" for="sTitulo">Titulo</label>
+        <input placeholder="" id="sTitulo" type="text" formControlName="sTitulo" class="validate" maxlength="300" required>
+        <label for="sTitulo">Titulo</label>
       </div>
     </div>
 
@@ -36,39 +36,38 @@
 
     <div class="row">
       <div class="input-field col l3 m6 s12">
-        <input id="dDataInicio" type="date" formControlName="dDataInicio" placeholder="Data de inicio" class="validate" required>
-        <label for="dDataInicio" class="active">Data de inicio</label>
+        <input placeholder="" id="dDataInicio" type="date" formControlName="dDataInicio" required materialize="pickadate" [materializeParams]="[dateOptions]">
+        <label for="dDataInicio">Data de inicio</label>
       </div>
 
       <div class="input-field col l3 m6 s12">
-        <input id="dDataTermino" type="date" class="validate" formControlName="dDataTermino" placeholder="Data de termino" required>
-        <label for="dDataTermino" class="active">Data de termino</label>
+        <input placeholder="" id="dDataTermino" type="date" formControlName="dDataTermino" required materialize="pickadate" [materializeParams]="[dateOptions]">
+        <label for="dDataTermino">Data de termino</label>
       </div>
 
       <div class="input-field col l3 m6 s12">
-        <input id="mValor" type="text" formControlName="mValor" class="validate" placeholder="Valor" kzMaskCurrency required>
-        <label for="mValor" class="active">Valor</label>
+        <input placeholder="" id="mValor" type="text" formControlName="mValor" class="validate" kzMaskCurrency required maxlength="15">
+        <label for="mValor">Valor</label>
       </div>
 
-      <div class="input-field col l3 m6 s12" *ngIf="valorContra">
-        <input id="mValorContraPartida" type="text" formControlName="mValorContraPartida" placeholder="Valor da contra partida" class="validate"
-          required kzMaskCurrency>
+      <div *ngIf="valorContra" class="input-field col l3 m6 s12">
+        <input placeholder="" id="mValorContraPartida" type="text" formControlName="mValorContraPartida" class="validate" required
+          kzMaskCurrency maxlength="15">
         <label for="mValorContraPartida" class="active">Valor da contra partida</label>
       </div>
     </div>
 
     <div class="row">
-      <label class="col l1 m6 s6" for="power">Municipio</label>
-      <select class="browser-default col l3 m6 s6" id="idCidade" formControlName="idCidade" required material-select>
-        <option style="display:none" value="">Selecione a cidade</option>
+      <select class="col l3 m6 s6" id="idCidade" formControlName="idCidade" required materialize="material_select">
+        <option disabled selected value="">Selecione a cidade</option>
         <option *ngFor="let cidade of cidades" [value]="cidade.iCodCidade">{{cidade.sNomeCidade}}</option>
       </select>
     </div>
 
     <div class="row">
       <div class="input-field col l12 m12 s12">
-        <textarea id="tResumo" formControlName="tResumo" placeholder="Objeto" class="materialize-textarea"></textarea>
-        <label for="tResumo" class="active">Objeto</label>
+        <textarea placeholder="" id="tResumo" formControlName="tResumo" class="materialize-textarea"></textarea>
+        <label for="tResumo">Objeto</label>
       </div>
     </div>
 
@@ -88,38 +87,20 @@
 
     <div *ngIf="id !=0">
       <div class="row">
-        <div class="file-field input-field col l9 m6 s12">
-          <div class="btn">
-            <span>Arquivo</span>
-            <input #fileInput type="file" />
-          </div>
-
-          <div class="file-path-wrapper">
-            <input class="file-path validate" type="text" placeholder="Selecionar arquivo" #textInput />
-          </div>
-        </div>
-
-        <div class="col l3 m6 s12 addFile">
-          <a class="btn" (click)="addFile()" *ngIf="ativoprazo && !admin">Adicionar arquivo</a>
-        </div>
-
-      </div>
-
-      <div class="row">
-        <h5 class="col l12 m12 s12">Arquivos</h5>
+        <h5 class="col l12 m12 s12">Arquivos Enviados</h5>
 
         <table>
-            <thead>
-                <tr>
-                  <th style="width: 90%"></th>
-                  <th style="width: 10%"></th>
-                </tr>
-              </thead>
+          <thead>
+            <tr>
+              <th style="width: 90%"></th>
+              <th style="width: 10%"></th>
+            </tr>
+          </thead>
 
           <tbody>
             <tr *ngFor="let emp of arquivoProjeto">
               <th>{{emp.sNome}}</th>
-              <th align="center">
+              <th style="text-align: right;">
                 <a href="javascript:void(0);" (click)="download(emp.id,emp.sNome)" title="Download do arquivo">
                   <i class="material-icons">cloud_download</i>
                 </a>
@@ -135,6 +116,24 @@
           </tbody>
 
         </table>
+      </div>
+
+      <div class="row">
+        <div class="file-field input-field col l9 m6 s12">
+          <div class="btn" style="margin-top: 15px;height: 36px;">
+            <span>SELECIONAR ARQUIVO</span>
+            <input #fileInput type="file" />
+          </div>
+
+          <div class="file-path-wrapper">
+            <input class="file-path validate" type="text" placeholder="Tamanho máx. por arquivo: 10 MB" #textInput />
+          </div>
+        </div>
+
+        <div class="col l3 m6 s12 addFile">
+          <a class="btn" (click)="addFile()" *ngIf="ativoprazo && !admin">ENVIAR</a>
+        </div>
+
       </div>
 
     </div>

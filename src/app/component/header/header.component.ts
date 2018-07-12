@@ -11,24 +11,23 @@ import { Http } from '@angular/http';
 })
 export class HeaderComponent implements OnInit {
 
-  isLoggedIn$: Observable<boolean>;                
-  versaoDesenv : any;
+  isLoggedIn$: Observable<boolean>;
+  versaoDesenv: any;
 
-  constructor(private authService: AuthService, private router: Router,private _http: Http) { }
+  constructor(private authService: AuthService, private router: Router, private _http: Http) { }
 
   ngOnInit() {
-    this.isLoggedIn$ = this.authService.isLoggedIn; 
-
-     this._http.get('assets/appsettings.json')
+    this.isLoggedIn$ = this.authService.isLoggedIn;
+    this._http.get('assets/appsettings.json')
      .subscribe(res => {
-       this.versaoDesenv = res.json().versaoDesenv
-     });
+       this.versaoDesenv = res.json().versaoDesenv;
+      });
   }
 
   onLogout() {
-    var ans = confirm("Você deseja sair do sistema?");
+    const ans = confirm('Você deseja sair do sistema?');
     if (ans) {
-      this.authService.logout();  
+      this.authService.logout();
       this.router.navigate(['/login']);
     }
   }
@@ -39,10 +38,9 @@ export class HeaderComponent implements OnInit {
 
   projeto() {
     this.router.navigate(['/projeto-list']);
-  }  
+  }
 
   home() {
     this.router.navigate(['/']);
-  }  
-
+  }
 }

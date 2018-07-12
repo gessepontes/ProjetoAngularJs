@@ -21,7 +21,7 @@
                 <th>{{ emp.sTitulo }}</th>
                 <th>{{ emp.sNoProcesso }}</th>
                 <th>{{ emp.dDataCadastro | date: 'dd/MM/yyyy' }}</th>
-                <th align="center">
+                <th style="text-align: right;">
                     <a [routerLink]="['/projeto/edit/', emp.id]" title="Visualizar / Editar projeto">
                         <i class="material-icons">edit</i>
                     </a>
@@ -31,7 +31,7 @@
                 </th>
             </tr>
 
-            <tr *ngIf="pagedItems == ''">
+            <tr *ngIf="pagedItems == null">
                 <td colspan="3">Não existe projeto cadastrado!</td>
             </tr>
         </tbody>

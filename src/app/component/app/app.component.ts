@@ -13,8 +13,8 @@ export class AppComponent {
 
   constructor(private _http: Http) {
     this._http.get('assets/appsettings.json')
-    .subscribe(res => {
-        localStorage.setItem('sUrl',  res.json().defaultUrl);
-    });
-}  
+      .subscribe(res => {
+        localStorage.setItem('sUrl', res.json().defaultUrl);
+      });
+  }
 }

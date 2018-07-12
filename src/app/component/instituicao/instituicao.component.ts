@@ -1,10 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Http, Headers } from '@angular/http';
-import { NgForm, FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { InstituicaoService } from '../../service/instituicao/instituicao.service'
-import { EstadoService } from '../../service/estado/estado.service'
-import { CidadeService } from '../../service/cidade/cidade.service'
+import { InstituicaoService } from '../../service/instituicao/instituicao.service';
+import { EstadoService } from '../../service/estado/estado.service';
+import { CidadeService } from '../../service/cidade/cidade.service';
 import { ArquivoService } from '../../service/arquivo/arquivo.service';
 import { AuthService } from '../../service/auth/auth.service';
 import { MensagemService } from '../../service/mensagem/mensagem.service';
@@ -19,19 +18,18 @@ import { saveAs } from 'file-saver';
 })
 
 export class InstituicaoComponent implements OnInit {
-  @ViewChild("fileInput") fileInput: any;
-  @ViewChild("textInput") textInput: any;
-
+  @ViewChild('fileInput') fileInput: any;
+  @ViewChild('textInput') textInput: any;
   instituicaoForm: FormGroup;
   private formSubmitAttempt: boolean;
-  title: string = "Nova instituição";
+  title: string = 'Nova instituição';
   id: number;
   idCidade: number;
   estados: any;
   cidades: any;
   arquivoInstituicao: any;
-  ativo : boolean = false;
-  ativoprazo : boolean = false;
+  ativo: boolean = false;
+  ativoprazo: boolean = false;
   displayedColumns = ['sNome'];
 
   submitted = false;
@@ -84,9 +82,9 @@ export class InstituicaoComponent implements OnInit {
   ];
 
   // TODO: Remove this when we're done
-  get diagnostic() { return JSON.stringify(this.instituicaoForm.value); }
+ // get diagnostic() { return JSON.stringify(this.instituicaoForm.value); }
 
-  constructor(private _fb: FormBuilder, private _avRoute: ActivatedRoute, 
+  constructor(private _fb: FormBuilder, private _avRoute: ActivatedRoute,
     private _instituicaoService: InstituicaoService, private _estadoService: EstadoService, private alertService: MensagemService,
     private _arquivoService: ArquivoService, private authenticationService: AuthService,private spinner: SpinnerVisibilityService,
     private _cidadeService: CidadeService, private _router: Router) {
@@ -94,13 +92,13 @@ export class InstituicaoComponent implements OnInit {
     spinner.show();
     this.getEstado();
 
-    let user = localStorage.getItem('currentUser');
+    const user = localStorage.getItem('currentUser');
     
-    if (user != null) {
+    if (user !== null) {
       this.id = JSON.parse(user).id;
       this.idCidade = JSON.parse(user).idCidade;
       this.ativo = true;
-    }else{
+    } else {
       this.id = 0;
       this.ativo = false;
     }
@@ -152,13 +150,6 @@ export class InstituicaoComponent implements OnInit {
     }
   }
 
-  isFieldInvalid(field: string) {
-    return (
-      (!this.instituicaoForm.get(field).valid && this.instituicaoForm.get(field).touched) ||
-      (this.instituicaoForm.get(field).untouched && this.formSubmitAttempt)
-    );
-  }
-
   getEstado() {
     this._estadoService.getEstados()
       .subscribe(data => this.estados = data
@@ -202,18 +193,18 @@ export class InstituicaoComponent implements OnInit {
     this.spinner.hide();
     
     if(error.status == 401){
-        this.alertService.error("Sua sessão expirou entre novamente com seu usuário.");
+        this.alertService.error('Sua sessão expirou entre novamente com seu usuário.');
         this.authenticationService.logout();  
         this._router.navigate(['/login']);
       }else{
-        this.alertService.error("Erro ao realizar a operação!");
+        this.alertService.error('Erro ao realizar a operação!');
       }
   }
 
   testSenha() {
 
     let teste = true;
-    var pattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
+    const pattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
 
     if (this.instituicaoForm.value.sSenha == '' && this.instituicaoForm.value.id == 0) {
       alert('A senha é um campo obrigatório.');
@@ -223,23 +214,16 @@ export class InstituicaoComponent implements OnInit {
     if (this.instituicaoForm.value.sSenha != '') {
       if (this.instituicaoForm.value.sSenha != this.instituicaoForm.value.sConfirmaSenha) {
         alert('A senha e a confimação da senha não são iguais.');
-        teste = false;
+        return false;
       } else {
-        ///^
-        //    (?=.*\d)          // should contain at least one digit
-        //    (?=.*[a - z])       // should contain at least one lower case
-        //    (?=.*[A - Z])       // should contain at least one upper case
-        //[a - zA - Z0 - 9]{8,}   // should contain at least 8 from the mentioned characters
-        //$ /
-
         if (!pattern.test(this.instituicaoForm.value.sSenha)) {
-          alert('A senha precisa ter no minimo 8 caracteres e ser composta de letras(sendo necessário ter no minimo um caractere maiusculo e um minusculo) e números.');
+          alert('A senha precisa ter no minimo 8 caracteres e ser composta de letras e números.');
           teste = false;
         }
       }
     } else {
       if (this.instituicaoForm.value.id == 0) {
-        this.alertService.error("Senha é um campo abrigatório!");
+        this.alertService.error('Senha é um campo abrigatório!');
         teste = false;
 
       } else {
@@ -254,16 +238,16 @@ export class InstituicaoComponent implements OnInit {
     this._instituicaoService.addInstituicao(this.instituicaoForm.value)
       .subscribe((data) => {
         if (data == 0) {
-          this.alertService.error("Erro ao realizar a operação!");
+          this.alertService.error('Erro ao realizar a operação!');
         } else {
           this.authenticationService.login(this.instituicaoForm.value.sCNPJ,this.instituicaoForm.value.sSenha)
             .subscribe(
               data => {
-                this.alertService.success("Operação realizada com sucesso!");
+                this.alertService.success('Operação realizada com sucesso!');
                 this._router.navigate(['/']);
               },
               error => {
-                this.alertService.error("Erro ao realizar a operação!");
+                this.alertService.error('Erro ao realizar a operação!');
               });
         }
       }, error => this.errorHandler(error));
@@ -273,9 +257,9 @@ export class InstituicaoComponent implements OnInit {
     this._instituicaoService.updateInstituicao(this.instituicaoForm.value)
       .subscribe((data) => {
         if (data == 0) {
-          this.alertService.error("Erro ao realizar a operação!");
+          this.alertService.error('Erro ao realizar a operação!');
         } else {
-          this.alertService.success("Operação realizada com sucesso!");
+          this.alertService.success('Operação realizada com sucesso!');
         }
       },error => this.errorHandler(error));
   }
@@ -284,13 +268,12 @@ export class InstituicaoComponent implements OnInit {
 
     if (this.instituicaoForm.valid) {
       if (this.testSenha()) {
-        if(this.instituicaoForm.value.idCidade == ''){
-          this.alertService.error("Cidade é um campo obrigatório.");
-        }else{
+        if(this.instituicaoForm.value.idCidade === ''){
+          this.alertService.error('Cidade é um campo obrigatório.');
+        } else {
           if (this.instituicaoForm.value.id == 0) {
             this.getTestCnpj();            
-          }
-          else {
+          } else {
             this.updateInstituicao();
           }
         }
@@ -305,9 +288,8 @@ export class InstituicaoComponent implements OnInit {
       .subscribe(data => {
         if (!data) {
           this.addInstituicao();
-        }
-        else {
-          this.alertService.error("Foi constatado que esse CNPJ já encontra-se cadastrado na nossa base de dados, por favor verifique a numeração.");
+        } else {
+          this.alertService.error('Foi constatado que esse CNPJ já encontra-se cadastrado na nossa base de dados, por favor verifique a numeração.');
         }
       }
         , error => this.errorHandler(error));
@@ -320,8 +302,8 @@ export class InstituicaoComponent implements OnInit {
       let fileToUpload = fi.files[0];
       let sizeFile = Math.round(fileToUpload.size / 1024);
 
-      if (sizeFile > 2048) {
-        alert("Tamanho maximo para o arquivo é de 2mb!");
+      if (sizeFile > 5120) {
+        alert('Tamanho maximo para o arquivo é de 5mb!');
         return;
       }
 
@@ -331,17 +313,17 @@ export class InstituicaoComponent implements OnInit {
       }
 
       if (fileToUpload.name.length > 250) {
-        alert("O nome do arquivo é superior a 250 caracteres!");
+        alert('O nome do arquivo é superior a 250 caracteres!');
         return;
       }
 
       this._arquivoService
         .addArquivo(fileToUpload, this.instituicaoForm.value.id,1)
         .subscribe(data => {
-          if (data == 0) {
-            this.alertService.error("Erro ao realizar a operação!");
+          if (data === 0) {
+            this.alertService.error('Erro ao realizar a operação!');
           } else {
-            this.alertService.success("Operação realizada com sucesso!");
+            this.alertService.success('Operação realizada com sucesso!');
             this.getInstituicao(this.instituicaoForm.value.id);
           }
         });
@@ -350,7 +332,7 @@ export class InstituicaoComponent implements OnInit {
         this.textInput.nativeElement.value = "";
 
     } else {
-      alert("Selecione algum arquivo!");
+      alert('Selecione algum arquivo!');
     }
   }
 
@@ -363,15 +345,15 @@ export class InstituicaoComponent implements OnInit {
 
   delete(id: number) {
 
-    var ans = confirm("Você deseja excluir este arquivo?");
+    var ans = confirm('Você deseja excluir este arquivo?');
     if (ans) {
       this._arquivoService
         .deleteArquivo(id)
         .subscribe(data => {
-          if (data == 0) {
-            this.alertService.error("Erro ao realizar a operação!");
+          if (data === 0) {
+            this.alertService.error('Erro ao realizar a operação!');
           } else {
-            this.alertService.success("Operação realizada com sucesso!");
+            this.alertService.success('Operação realizada com sucesso!');
             this.getInstituicao(this.instituicaoForm.value.id);
           }
         });
@@ -394,7 +376,7 @@ export class InstituicaoComponent implements OnInit {
         } 
       },
       error => {
-        this.alertService.error("Erro ao realizar a operação!");
+        this.alertService.error('Erro ao realizar a operação!');
       });
   }
 

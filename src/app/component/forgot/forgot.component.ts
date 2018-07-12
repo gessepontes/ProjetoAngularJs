@@ -12,8 +12,7 @@ import { AuthService } from '../../service/auth/auth.service';
 export class ForgotComponent implements OnInit {
   formForgot: FormGroup;
 
-  constructor(private fb: FormBuilder,private router: Router,
-    private authService: AuthService, private alertService: MensagemService) { }
+  constructor(private fb: FormBuilder, private router: Router, private authService: AuthService, private alertService: MensagemService) { }
 
   ngOnInit() {
     this.formForgot = this.fb.group({
@@ -21,27 +20,25 @@ export class ForgotComponent implements OnInit {
     });
   }
 
-  back(){
+  back() {
     this.router.navigate(['/login']);
   }
 
-  send(){
+  send() {
     if (this.formForgot.valid) {
       this.authService.send(this.formForgot.value.cnpj).subscribe(
         data => {
-          if (data == 0) {
-            this.alertService.error("Não existe este cnpj cadastrado na base de dados!");
-          }
-          else if (data == 2) {
-            this.alertService.error("Erro ao realizar a operação!");
-          }
-          else {
-            this.alertService.error("Operação realizada com sucesso, verifique seu email!");
+          if (data === 0) {
+            this.alertService.error('Não existe este cnpj cadastrado na base de dados!');
+          } else if (data === 2) {
+            this.alertService.error('Erro ao realizar a operação!');
+          } else {
+            this.alertService.error('Operação realizada com sucesso, verifique seu email!');
             this.router.navigate(['/']);
           }
         },
         error => {
-          this.alertService.error("Erro ao realizar a operação!");
+          this.alertService.error('Erro ao realizar a operação!');
         });
     }
   }

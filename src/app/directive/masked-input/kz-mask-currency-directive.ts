@@ -80,15 +80,15 @@ export class KzMaskCurrencyDirective implements ControlValueAccessor, OnInit {
       $event.target.value = valor;
   }
 
-  @HostListener('blur', ['$event'])
-  onBlur($event: any) {
-      var pattern = '0' + this.separadorDecimal + '00';
-      if ($event.target.value.indexOf(pattern) === -1) {
-          return;
-      }
-      this.onChange('');
-      $event.target.value = '';
-  }
+//   @HostListener('blur', ['$event'])
+//   onBlur($event: any) {
+//       var pattern = '0' + this.separadorDecimal + '00';
+//       if ($event.target.value.indexOf(pattern) === -1) {
+//           return;
+//       }
+//       this.onChange('');
+//       $event.target.value = '';
+//   }
 
   /**
    * Aplica a máscara a determinado valor.

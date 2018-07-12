@@ -1,194 +1,176 @@
 <form [formGroup]="instituicaoForm">
-  <!-- {{diagnostic}} -->
 
   <div class="container">
     <h5>{{title}}</h5>
 
     <div class="row">
       <div class="input-field col l3 m6 s12">
-        <input id="sCNPJ" type="text" kzMask="99.999.999/9999-99" formControlName="sCNPJ" class="validate" required>
-        <label for="sCNPJ" class="active">Cnpj</label>
+        <input placeholder="" id="sCNPJ" type="text" class="validate" kzMask="99.999.999/9999-99" formControlName="sCNPJ" required>
+        <label for="sCNPJ">Cnpj</label>
       </div>
 
       <div class="input-field col l9 m6 s12">
-        <input id="sProponente" type="text" formControlName="sProponente" class="validate" maxlength="100" required>
-        <label for="sProponente" class="active">Proponente</label>
+        <input placeholder="" id="sProponente" type="text" formControlName="sProponente" class="validate" maxlength="100" required>
+        <label for="sProponente">Proponente</label>
       </div>
     </div>
 
     <div class="row">
       <div class="input-field col l4 m6 s12">
-        <input id="sEndereco" type="text" formControlName="sEndereco" class="validate" maxlength="100" required>
-        <label for="sEndereco" class="active">Endereço</label>
+        <input placeholder="" id="sEndereco" type="text" formControlName="sEndereco" class="validate" maxlength="100" required>
+        <label for="sEndereco">Endereço</label>
       </div>
       <div class="input-field col l2 m6 s12">
-        <input id="sCep" type="text" formControlName="sCep" class="validate" kzMask="99999-999" required>
-        <label for="sCep" class="active">Cep</label>
+        <input placeholder="" id="sCep" type="text" formControlName="sCep" class="validate" kzMask="99999-999" required>
+        <label for="sCep">Cep</label>
       </div>
 
       <div class="input-field col l3 m6 s12">
-        <input id="sTelefone" type="tel" formControlName="sTelefone" class="validate" kzMask="(99) 9999-9999" required>
-        <label for="sTelefone" class="active">Telefone</label>
+        <input placeholder="" id="sTelefone" type="tel" formControlName="sTelefone" class="validate" kzMask="(99) 9999-9999" required>
+        <label for="sTelefone">Telefone</label>
       </div>
 
       <div class="input-field col l3 m6 s12">
-        <input id="sFax" type="tel" formControlName="sFax" class="validate" kzMask="(99) 9999-9999">
-        <label for="sFax" class="active">Fax</label>
+        <input placeholder="" id="sFax" type="tel" formControlName="sFax" kzMask="(99) 9999-9999">
+        <label for="sFax">Fax</label>
       </div>
     </div>
 
 
     <div class="row">
-      <select class="browser-default col l4 m4 s12" id="idEstado" formControlName="idEstado" (change)="getCidadeByIdEstado($event.target.value,true)"
-        material-select>
-        <option value="0" selected>Selecione o estado</option>
-        <option *ngFor="let estado of estados" [value]="estado.iCodEstado">{{estado.sNomeEstado}}</option>
-      </select>
-
-      <select class="browser-default col l4 m4 s12" id="idCidade" formControlName="idCidade" required material-select>
-        <option style="display:none" value="">Selecione a cidade</option>
-        <option *ngFor="let cidade of cidades" [value]="cidade.iCodCidade">{{cidade.sNomeCidade}}</option>
-      </select>
-
-      <select class="browser-default col l4 m4 s12" id="iRegime" formControlName="iRegime" required material-select>
-        <option style="display:none" value="">Selecione o regime</option>
-        <option *ngFor="let regime of regimes" [value]="regime.id"> {{regime.nome}}</option>
-      </select>
-    </div>
-
-    <div class="row">
-      <select class="browser-default col l6 m6 s12" id="iEsfera" formControlName="iEsfera" required material-select>
-        <option style="display:none" value="">Selecione a esfera</option>
-        <option *ngFor="let esfera of esferas" [value]="esfera.id">{{esfera.nome}}</option>
-      </select>
-
-      <select class="browser-default col l6 m6 s12" id="iNatureza" formControlName="iNatureza" required material-select>
-        <option style="display:none" value="">Selecione a natureza da instituição</option>
-        <option *ngFor="let natureza of naturezas" [value]="natureza.id"> {{natureza.nome}}</option>
-      </select>
-    </div>
+        <select class="col l4 m4 s12" id="idEstado" formControlName="idEstado" (change)="getCidadeByIdEstado($event.target.value,true)"
+          materialize="material_select">
+          <option value="0" disabled selected>Selecione o estado</option>
+          <option *ngFor="let estado of estados" [value]="estado.iCodEstado">{{estado.sNomeEstado}}</option>
+        </select>
+  
+        <select class="col l4 m4 s12" id="idCidade" formControlName="idCidade" required materialize="material_select" [materializeSelectOptions]="cidades">
+          <option disabled selected value="">Selecione a cidade</option>
+          <option *ngFor="let cidade of cidades" [value]="cidade.iCodCidade">{{cidade.sNomeCidade}}</option>
+        </select>
+  
+        <select class="col l4 m4 s12" id="iRegime" formControlName="iRegime" required materialize="material_select">
+          <option disabled selected value="">Selecione o regime</option>
+          <option *ngFor="let regime of regimes" [value]="regime.id"> {{regime.nome}}</option>
+        </select>
+      </div>
+  
+      <div class="row">
+        <select class="col l6 m6 s12" id="iEsfera" formControlName="iEsfera" required materialize="material_select">
+          <option disabled selected value="">Selecione a esfera</option>
+          <option *ngFor="let esfera of esferas" [value]="esfera.id">{{esfera.nome}}</option>
+        </select>
+  
+        <select class="col l6 m6 s12" id="iNatureza" formControlName="iNatureza" required materialize="material_select">
+          <option disabled selected value="">Selecione a natureza da instituição</option>
+          <option *ngFor="let natureza of naturezas" [value]="natureza.id"> {{natureza.nome}}</option>
+        </select>
+      </div>
 
     <div class="row">
       <div class="input-field col l6 m6 s12">
-        <input id="sEmail" type="email" formControlName="sEmail" class="validate" maxlength="100" required>
-        <label for="sEmail" class="active">Email</label>
+        <input placeholder="" id="sEmail" type="email" formControlName="sEmail" class="validate" maxlength="100" required>
+        <label for="sEmail">Email</label>
       </div>
       <div class="input-field col l6 m6 s12">
-        <input id="sHomePage" type="url" formControlName="sHomePage" maxlength="100" class="validate">
-        <label for="sHomePage" class="active">HomePage</label>
+        <input placeholder="" id="sHomePage" type="url" formControlName="sHomePage" maxlength="100">
+        <label for="sHomePage">HomePage</label>
       </div>
     </div>
 
     <div class="row">
       <div class="input-field col l6 m6 s12">
-        <input id="sRepresentante" type="text" formControlName="sRepresentante" class="validate" maxlength="100" required>
-        <label for="sRepresentante" class="active">Representante</label>
+        <input placeholder="" id="sRepresentante" type="text" formControlName="sRepresentante" class="validate" maxlength="100" required>
+        <label for="sRepresentante">Representante</label>
       </div>
       <div class="input-field col l2 m6 s12">
-        <input id="sCpfRepresentante" type="text" formControlName="sCpfRepresentante" class="validate" kzMask="999.999.999-99" required>
-        <label for="sCpfRepresentante" class="active">Cpf do representante</label>
-      </div>
-
-      <div class="input-field col l2 m6 s12">
-        <input id="sRG" type="text" formControlName="sRG" class="validate" maxlength="20" required>
-        <label for="sRG" class="active">RG do representante</label>
+        <input placeholder="" id="sCpfRepresentante" type="text" formControlName="sCpfRepresentante" class="validate" kzMask="999.999.999-99" required>
+        <label for="sCpfRepresentante">Cpf do representante</label>
       </div>
 
       <div class="input-field col l2 m6 s12">
-        <input id="sOrgaoExpedidor" type="text" formControlName="sOrgaoExpedidor" maxlength="10" class="validate" required>
-        <label for="sOrgaoExpedidor" class="active">Orgão expedidor</label>
+        <input placeholder="" id="sRG" type="text" formControlName="sRG" class="validate" maxlength="20" required>
+        <label for="sRG">RG do representante</label>
+      </div>
+
+      <div class="input-field col l2 m6 s12">
+        <input placeholder="" id="sOrgaoExpedidor" type="text" formControlName="sOrgaoExpedidor" maxlength="10" class="validate" required>
+        <label for="sOrgaoExpedidor">Orgão expedidor</label>
       </div>
     </div>
 
     <div class="row">
       <div class="input-field col l6 m6 s12">
-        <input id="sCargo" type="text" formControlName="sCargo" maxlength="100" class="validate" required>
-        <label for="sCargo" class="active">Cargo</label>
+        <input placeholder="" id="sCargo" type="text" formControlName="sCargo" maxlength="100" class="validate" required>
+        <label for="sCargo">Cargo</label>
       </div>
       <div class="input-field col l6 m6 s12">
-        <input id="sFuncao" type="text" formControlName="sFuncao" maxlength="100" class="validate" required>
-        <label for="sFuncao" class="active">Função</label>
+        <input placeholder="" id="sFuncao" type="text" formControlName="sFuncao" maxlength="100" class="validate" required>
+        <label for="sFuncao">Função</label>
       </div>
     </div>
 
     <div class="row">
       <div class="input-field col l4 m6 s12">
-        <input id="sEnderecoRepresentante" type="text" formControlName="sEnderecoRepresentante" maxlength="100" class="validate"
+        <input placeholder="" id="sEnderecoRepresentante" type="text" formControlName="sEnderecoRepresentante" maxlength="100" class="validate"
           required>
-        <label for="sEnderecoRepresentante" class="active">Endereço do representante</label>
+        <label for="sEnderecoRepresentante">Endereço do representante</label>
       </div>
 
       <div class="input-field col l2 m6 s12">
-        <input id="sCepRepresentante" type="text" formControlName="sCepRepresentante" class="validate" kzMask="99999-999" required>
-        <label for="sCepRepresentante" class="active">Cep do representante</label>
+        <input placeholder="" id="sCepRepresentante" type="text" formControlName="sCepRepresentante" class="validate" kzMask="99999-999" required>
+        <label for="sCepRepresentante">Cep do representante</label>
       </div>
 
       <div class="input-field col l3 m6 s12">
-        <input id="sTelefoneRepresentante" type="tel" formControlName="sTelefoneRepresentante" class="validate" kzMask="(99) 9999-9999">
-        <label for="sTelefoneRepresentante" class="active">Telefone do representante</label>
+        <input placeholder="" id="sTelefoneRepresentante" type="tel" formControlName="sTelefoneRepresentante" kzMask="(99) 9999-9999">
+        <label for="sTelefoneRepresentante">Telefone do representante</label>
       </div>
 
       <div class="input-field col l3 m6 s12">
-          <input id="sCelularRepresentante" type="tel" formControlName="sCelularRepresentante" class="validate" kzMask="(99) 9999-99999">
-          <label for="sCelularRepresentante" class="active">Celular do representante</label>
-        </div>
+        <input placeholder="" id="sCelularRepresentante" type="tel" formControlName="sCelularRepresentante" class="validate" kzMask="(99) 9999-99999">
+        <label for="sCelularRepresentante">Celular do representante</label>
+      </div>
     </div>
 
     <div class="row">
       <div class="input-field col l4 m6 s12">
-        <input id="sCoordenador" type="text" formControlName="sCoordenador" maxlength="100" class="validate" required>
-        <label for="sCoordenador" class="active">Coordenador</label>
+        <input placeholder="" id="sCoordenador" type="text" formControlName="sCoordenador" maxlength="100" class="validate" required>
+        <label for="sCoordenador">Coordenador</label>
       </div>
 
       <div class="input-field col l2 m6 s12">
-        <input id="sCPFCoordenador" type="text" formControlName="sCPFCoordenador" class="validate" kzMask="999.999.999-99" required>
-        <label for="sCPFCoordenador" class="active">Cpf do coordenador</label>
+        <input placeholder="" id="sCPFCoordenador" type="text" formControlName="sCPFCoordenador" class="validate" kzMask="999.999.999-99" required>
+        <label for="sCPFCoordenador">Cpf do coordenador</label>
       </div>
 
       <div class="input-field col l3 m6 s12">
-        <input id="sTelefoneCoordenador" type="tel" formControlName="sTelefoneCoordenador" class="validate" kzMask="(99) 9999-9999">
-        <label for="sTelefoneCoordenador" class="active">Telefone do coordenador</label>
+        <input placeholder="" id="sTelefoneCoordenador" type="tel" formControlName="sTelefoneCoordenador" class="validate" kzMask="(99) 9999-9999">
+        <label for="sTelefoneCoordenador">Telefone do coordenador</label>
       </div>
 
       <div class="input-field col l3 m6 s12">
-          <input id="sCelularCoordenador" type="tel" formControlName="sCelularCoordenador" class="validate" kzMask="(99) 9999-99999">
-          <label for="sCelularCoordenador" class="active">Celular do coordenador</label>
-      </div>      
+        <input placeholder="" id="sCelularCoordenador" type="tel" formControlName="sCelularCoordenador" class="validate" kzMask="(99) 9999-99999">
+        <label for="sCelularCoordenador">Celular do coordenador</label>
+      </div>
     </div>
 
     <div *ngIf="id !=0">
       <div class="row">
-        <div class="file-field input-field col l9 m6 s12">
-          <div class="btn">
-            <span>Arquivo</span>
-            <input #fileInput type="file" />
-          </div>
+        <h5 class="col l12 m12 s12">Arquivos Enviados</h5>
 
-          <div class="file-path-wrapper">
-            <input class="file-path validate" type="text" placeholder="Selecionar arquivo" #textInput />
-          </div>
-        </div>
-
-        <div class="col l3 m6 s12 addFile">
-          <a class="btn" (click)="addFile()">Adicionar arquivo</a>
-        </div>
-
-      </div>
-      <div class="row">
-          <h5 class="col l12 m12 s12">Arquivos</h5>
-          
         <table>
-            <thead>
-                <tr>
-                  <th style="width: 90%"></th>
-                  <th style="width: 10%"></th>
-                </tr>
-              </thead>
+          <thead>
+            <tr>
+              <th style="width: 90%"></th>
+              <th style="width: 10%"></th>
+            </tr>
+          </thead>
 
           <tbody>
             <tr *ngFor="let emp of arquivoInstituicao">
               <th>{{emp.sNome}}</th>
-              <th align="center">
+              <th style="text-align: right;">
                 <a href="javascript:void(0);" (click)="download(emp.id,emp.sNome)" title="Download do arquivo">
                   <i class="material-icons">cloud_download</i>
                 </a>
@@ -205,10 +187,28 @@
 
         </table>
       </div>
+
+      <div class="row">
+        <div class="file-field input-field col l9 m6 s12">
+          <div class="btn" style="margin-top: 15px;height: 36px;">
+            <span>SELECIONAR ARQUIVO</span>
+            <input #fileInput type="file" />
+          </div>
+
+          <div class="file-path-wrapper">
+            <input class="file-path validate" type="text" placeholder="Tamanho máx. por arquivo: 5 MB" #textInput />
+          </div>
+        </div>
+
+        <div class="col l3 m6 s12 addFile">
+          <a class="btn" (click)="addFile()" *ngIf="ativoprazo">ENVIAR</a>
+        </div>
+
+      </div>
     </div>
 
     <div class="row" *ngIf="ativo">
-        <h5 class="col l12 m12 s12">Alterar Senha</h5>
+      <h5 class="col l12 m12 s12">Alterar Senha</h5>
     </div>
 
     <div class="row">
@@ -224,8 +224,12 @@
     </div>
 
     <div class="row">
-      <div class="input-field col s12" *ngIf="ativoprazo">
-        <a class="btn" (click)="save()" [attr.disabled]="!instituicaoForm.valid?'':null">Salvar</a>
+      <p class="col l12 m12 s12">A senha deve conter no minimo 8 caracteres e ser composta de letras (pelo menos uma maiúscula e uma minúscula) e números</p>
+    </div>
+
+    <div class="row">
+      <div class="input-field col s12">
+        <a class="btn" (click)="save()" [attr.disabled]="!instituicaoForm.valid?'':null" *ngIf="ativoprazo">Salvar</a>
         <a class="btn" *ngIf="!ativo" (click)="back()">Voltar</a>
         <a class="btn" *ngIf="ativo" (click)="cancel()">Cancelar</a>
       </div>
