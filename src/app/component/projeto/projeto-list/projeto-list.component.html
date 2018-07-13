@@ -10,6 +10,7 @@
     <table>
         <thead>
             <tr>
+                <th *ngIf="admin">Instituição</th>
                 <th>Projeto</th>
                 <th>N° Processo</th>
                 <th>Data de cadastro</th>
@@ -18,6 +19,7 @@
         </thead>
         <tbody>
             <tr *ngFor="let emp of pagedItems">
+                <th *ngIf="admin">{{ emp.instituicao.sProponente }}</th>
                 <th>{{ emp.sTitulo }}</th>
                 <th>{{ emp.sNoProcesso }}</th>
                 <th>{{ emp.dDataCadastro | date: 'dd/MM/yyyy' }}</th>

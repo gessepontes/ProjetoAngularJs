@@ -104,7 +104,7 @@ export class ProjetoComponent implements OnInit {
 
   }
 
-  private dateOptions = this.getDefaultPickaOption();
+  dateOptions = this.getDefaultPickaOption();
 
   private getDefaultPickaOption(): any {
     return {
