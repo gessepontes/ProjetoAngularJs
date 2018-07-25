@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { DatePipe } from '@angular/common'
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
 
-import { CidadeService } from '../../../service/cidade/cidade.service'
 import { ProjetoService } from '../../../service/projeto/projeto.service'
 import { MensagemService } from '../../../service/mensagem/mensagem.service';
 import { ArquivoService } from '../../../service/arquivo/arquivo.service'
@@ -11,6 +11,9 @@ import { saveAs } from 'file-saver';
 import { AuthService } from '../../../service/auth/auth.service';
 import { SpinnerVisibilityService } from 'ng-http-loader/services/spinner-visibility.service';
 import { InstituicaoService } from '../../../service/instituicao/instituicao.service';
+import { DropdownService } from '../../../service/dropdown.service';
+import { Cidades } from '../../../models/icidades.model';
+import { Diversos } from '../../../models/idiversos.model';
 
 @Component({
   selector: 'projeto',
@@ -27,70 +30,22 @@ export class ProjetoComponent implements OnInit {
   id: number;
   idInstituicao: number;
   errorMessage: any;
-  cidades: any;
+  cidades: Observable<Cidades>;
   aArea: number[] = [];
   arquivoProjeto: any;
   admin: boolean = false;
   valorContra: boolean = false;
-
-  areas = [
-    {
-      id: 1,
-      nome: 'Meio Ambiente'
-    },
-    {
-      id: 2,
-      nome: 'Consumidor'
-    },
-    {
-      id: 3,
-      nome: 'Defesa da Concorrencia'
-    },
-    {
-      id: 4,
-      nome: 'Artístico'
-    },
-    {
-      id: 5,
-      nome: 'Estético'
-    },
-    {
-      id: 6,
-      nome: 'Histórico'
-    },
-    {
-      id: 7,
-      nome: 'Turístico'
-    },
-    {
-      id: 8,
-      nome: 'Paisagismo'
-    },
-    {
-      id: 9,
-      nome: 'Direitos Difusos'
-    }
-  ]
-
-  // TODO: Remove this when we're done
-  get diagnostic() { return JSON.stringify(this.projetoForm.value); }
+  areas: Observable<Diversos[]>;
   ativoprazo: boolean = false;
 
-  constructor(private _fb: FormBuilder, private _avRoute: ActivatedRoute, private _cidadeService: CidadeService, private spinner: SpinnerVisibilityService,public datepipe: DatePipe,
-    private alertService: MensagemService, private _arquivoService: ArquivoService, private authenticationService: AuthService, private _instituicaoService: InstituicaoService,
-    private _projetoService: ProjetoService, private router: Router) {
+  constructor(private _fb: FormBuilder, private _avRoute: ActivatedRoute, private _dropdownService: DropdownService,
+    private spinner: SpinnerVisibilityService, public datepipe: DatePipe,
+    private alertService: MensagemService, private _arquivoService: ArquivoService, private authenticationService: AuthService,
+    private _instituicaoService: InstituicaoService,
+    private _projetoService: ProjetoService, private router: Router) { }
 
-    spinner.show();
-
-    if (this._avRoute.snapshot.params["id"]) {
-      this.id = this._avRoute.snapshot.params["id"];
-      this.prazo();
-    } else {
-      this.spinner.hide();
-      this.id = 0;
-    }
-
-    this.getCidadeByIdEstado(6);
+  ngOnInit() {
+    this.spinner.show();
 
     let user = localStorage.getItem('currentUser');
 
@@ -102,64 +57,6 @@ export class ProjetoComponent implements OnInit {
       }
     }
 
-  }
-
-  dateOptions = this.getDefaultPickaOption();
-
-  private getDefaultPickaOption(): any {
-    return {
-      monthsFull: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
-      monthsShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
-      weekdaysFull: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sabádo'],
-      weekdaysShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
-      weekdaysAbbrev: [ 'D', 'S', 'T', 'Q', 'Q', 'S', 'S' ],
-      today: 'Hoje',
-      clear: 'Limpar',
-      close: 'Pronto',
-      labelMonthNext: 'Próximo mês',
-      labelMonthPrev: 'Mês anterior',
-      labelMonthSelect: 'Selecione um mês',
-      labelYearSelect: 'Selecione um ano',
-      format: 'yyyy-mm-dd',
-      editable: false,
-      // closeOnSelect: true,
-      selectYears: 15
-    };
-  }
-
-  getCidadeByIdEstado(id: number) {
-    this._cidadeService.getCidadeByIdEstado(id)
-      .subscribe(data => this.cidades = data
-        , error => this.errorHandler(error));
-  }
-
-
-  getValorContra() {
-    this._instituicaoService.getValorContra(this.idInstituicao)
-      .subscribe(data => this.valorContra = data
-        , error => this.errorHandler(error));
-  }
-
-  sArea(id: number) {
-    if (this.aArea.find(x => x == id)) {
-
-      this.aArea.forEach((item, index) => {
-        console.log(item); // 9, 2, 5
-        console.log(index); // 0, 1, 2
-
-        if (index != -1 && item == id) {
-          this.aArea.splice(index, 1);
-        }
-      });
-    } else {
-      this.aArea.push(id);
-    }
-
-    this.projetoForm.value.sArea = this.aArea;
-  }
-
-
-  ngOnInit() {
     this.projetoForm = this._fb.group({
       id: '0',
       idInstituicao: '0',
@@ -174,17 +71,69 @@ export class ProjetoComponent implements OnInit {
       arquivo: null
     });
 
+    this.cidades =  this._dropdownService.getCidadeByIdEstado(6);
+    this.areas = this._dropdownService.getAreas();
+
     if (this.idInstituicao > 0) {
 
       this.prazo();
 
-      if (this.id > 0) {
-        this.getProjetoById(this.id);
+      if (this._avRoute.snapshot.params["id"]) {
+        this.id = this._avRoute.snapshot.params["id"];
+        this.getProjetoById(this.id);        
+      } else {
+        this.id = 0;
       }
+
+      this.spinner.hide();
     } else {
       alert("É necessário a criação de uma instituição para a criação de um projeto!");
       this.router.navigate(['/projeto-list']);
     }
+  }
+
+  dateOptions = this.getDefaultPickaOption();
+
+  private getDefaultPickaOption(): any {
+    return {
+      monthsFull: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+      monthsShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+      weekdaysFull: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sabádo'],
+      weekdaysShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
+      weekdaysAbbrev: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'],
+      today: 'Hoje',
+      clear: 'Limpar',
+      close: 'Pronto',
+      labelMonthNext: 'Próximo mês',
+      labelMonthPrev: 'Mês anterior',
+      labelMonthSelect: 'Selecione um mês',
+      labelYearSelect: 'Selecione um ano',
+      format: 'yyyy-mm-dd',
+      editable: false,
+      // closeOnSelect: true,
+      selectYears: 15
+    };
+  }
+
+  getValorContra() {
+    this._instituicaoService.getValorContra(this.idInstituicao)
+      .subscribe(data => this.valorContra = data
+        , error => this.errorHandler(error));
+  }
+
+  sArea(id: number) {
+    if (this.aArea.find(x => x == id)) {
+
+      this.aArea.forEach((item, index) => {
+        if (index != -1 && item == id) {
+          this.aArea.splice(index, 1);
+        }
+      });
+    } else {
+      this.aArea.push(id);
+    }
+
+    this.projetoForm.value.sArea = this.aArea;
   }
 
   getProjetoById(id: number) {
@@ -324,7 +273,7 @@ export class ProjetoComponent implements OnInit {
 
   delete(id: number) {
 
-    var ans = confirm("Você deseja excluir este arquivo?");
+    let ans = confirm("Você deseja excluir este arquivo?");
     if (ans) {
       this._arquivoService
         .deleteArquivo(id)

@@ -1,15 +1,19 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
+
 import { InstituicaoService } from '../../service/instituicao/instituicao.service';
-import { EstadoService } from '../../service/estado/estado.service';
-import { CidadeService } from '../../service/cidade/cidade.service';
 import { ArquivoService } from '../../service/arquivo/arquivo.service';
 import { AuthService } from '../../service/auth/auth.service';
 import { MensagemService } from '../../service/mensagem/mensagem.service';
 import { SpinnerVisibilityService } from 'ng-http-loader/services/spinner-visibility.service';
+import { Observable } from 'rxjs/Observable';
 
 import { saveAs } from 'file-saver';
+import { Estados } from '../../models/iestados.model';
+import { Cidades } from '../../models/icidades.model';
+import { DropdownService } from '../../service/dropdown.service';
+import { Diversos } from '../../models/idiversos.model';
 
 @Component({
   selector: 'instituicao',
@@ -25,72 +29,29 @@ export class InstituicaoComponent implements OnInit {
   title: string = 'Nova instituição';
   id: number;
   idCidade: number;
-  estados: any;
-  cidades: any;
   arquivoInstituicao: any;
   ativo: boolean = false;
   ativoprazo: boolean = false;
   displayedColumns = ['sNome'];
+  estados: Observable<Estados>;
+  cidades: Observable<Cidades>;
+  regimes: Observable<Diversos[]>;
+  esferas: Observable<Diversos[]>;
+  naturezas: Observable<Diversos[]>;
 
   submitted = false;
 
   onSubmit() { this.submitted = true; }
 
-  regimes = [
-    {
-      id: 1,
-      nome: 'Direito Público'
-    },
-    {
-      id: 2,
-      nome: 'Direito Privado'
-    }
-  ];
-
-  esferas = [
-    {
-      id: 1,
-      nome: 'Federal'
-    },
-    {
-      id: 2,
-      nome: 'Estadual'
-    },
-    {
-      id: 3,
-      nome: 'Municipal'
-    },
-    {
-      id: 4,
-      nome: 'Organização Ambientalista'
-    },
-    {
-      id: 5,
-      nome: 'Outros'
-    }
-  ];
-
-  naturezas = [
-    {
-      id: 1,
-      nome: 'Entidade Pública'
-    },
-    {
-      id: 2,
-      nome: 'Organização da Sociedade Civil'
-    }
-  ];
-
-  // TODO: Remove this when we're done
- // get diagnostic() { return JSON.stringify(this.instituicaoForm.value); }
-
   constructor(private _fb: FormBuilder, private _avRoute: ActivatedRoute,
-    private _instituicaoService: InstituicaoService, private _estadoService: EstadoService, private alertService: MensagemService,
-    private _arquivoService: ArquivoService, private authenticationService: AuthService,private spinner: SpinnerVisibilityService,
-    private _cidadeService: CidadeService, private _router: Router) {
+    private _instituicaoService: InstituicaoService, private alertService: MensagemService,
+    private _dropdownService: DropdownService,
+    private _arquivoService: ArquivoService, private authenticationService: AuthService,
+    private spinner: SpinnerVisibilityService,
+    private _router: Router) {
 
     spinner.show();
-    this.getEstado();
+    this.estados = this._dropdownService.getEstados();
 
     const user = localStorage.getItem('currentUser');
     
@@ -142,6 +103,10 @@ export class InstituicaoComponent implements OnInit {
       sCelularCoordenador : ''
     });
 
+    this.regimes = this._dropdownService.getRegimes();
+    this.esferas = this._dropdownService.getEsferas();
+    this.naturezas = this._dropdownService.getNaturezas();
+
     if (this.id > 0) {
       this.title = "Editar instituição";
       this.getInstituicao(this.id);
@@ -150,14 +115,8 @@ export class InstituicaoComponent implements OnInit {
     }
   }
 
-  getEstado() {
-    this._estadoService.getEstados()
-      .subscribe(data => this.estados = data
-        ,error => this.errorHandler(error));
-  }
-
   getCidadeByIdEstado(id: number, tipo: boolean) {
-    this._cidadeService.getCidadeByIdEstado(id)
+    this._dropdownService.getCidadeByIdEstado(id)
       .subscribe(data => {
         this.cidades = data;
 
@@ -345,7 +304,7 @@ export class InstituicaoComponent implements OnInit {
 
   delete(id: number) {
 
-    var ans = confirm('Você deseja excluir este arquivo?');
+    let ans = confirm('Você deseja excluir este arquivo?');
     if (ans) {
       this._arquivoService
         .deleteArquivo(id)

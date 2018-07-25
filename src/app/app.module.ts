@@ -8,17 +8,15 @@ import { HashLocationStrategy, LocationStrategy, DatePipe } from '@angular/commo
 
 import { MaterializeModule  } from 'angular2-materialize';
 import { NgHttpLoaderModule } from 'ng-http-loader/ng-http-loader.module';
+import { DataTablesModule } from 'angular-datatables';
 
 import { AuthGuard } from './guard/guard';
 import { AuthService } from './service/auth/auth.service';
 import { InstituicaoService } from './service/instituicao/instituicao.service';
-import { EstadoService } from './service/estado/estado.service';
-import { CidadeService } from './service/cidade/cidade.service';
 import { MensagemService } from './service/mensagem/mensagem.service';
 import { ArquivoService } from './service/arquivo/arquivo.service';
 import { ProjetoService } from './service/projeto/projeto.service';
 import { HttpClient } from './service/httpclient';
-import { PagerService } from './service/pager.service';
 
 import { AppComponent } from './component/app/app.component';
 import { InstituicaoComponent } from './component/instituicao/instituicao.component';
@@ -35,6 +33,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { KzMaskDirective } from './directive/masked-input/kz-mask-directive';
 import { KzMaskCurrencyDirective } from './directive/masked-input/kz-mask-currency-directive';
+import { DropdownService } from './service/dropdown.service';
 
 @NgModule({
   declarations: [
@@ -55,12 +54,12 @@ import { KzMaskCurrencyDirective } from './directive/masked-input/kz-mask-curren
     BrowserModule, HttpModule, HttpClientModule, NgHttpLoaderModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    BrowserAnimationsModule ,
-    MaterializeModule
+    BrowserAnimationsModule,
+    MaterializeModule,
+    DataTablesModule
   ],
-  providers: [AuthService, AuthGuard, InstituicaoService, PagerService, {provide: LocationStrategy, useClass: HashLocationStrategy},
-    EstadoService, CidadeService, DatePipe,
-    MensagemService, ArquivoService, ProjetoService, HttpClient],
+  providers: [AuthService, AuthGuard, InstituicaoService, {provide: LocationStrategy, useClass: HashLocationStrategy},
+    DropdownService, DatePipe, MensagemService, ArquivoService, ProjetoService, HttpClient],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

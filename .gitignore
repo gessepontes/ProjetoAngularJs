@@ -9,6 +9,9 @@
 # dependencies
 /node_modules
 
+#Appsettings
+/src/assets/appsettings.json
+
 # IDEs and editors
 /.idea
 .project

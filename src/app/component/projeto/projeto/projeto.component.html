@@ -21,7 +21,7 @@
 
     </div>
 
-    <div class="action-checkbox" *ngFor="let area of areas">
+    <div class="action-checkbox" *ngFor="let area of areas | async">
       <input type="checkbox" [checked]="(aArea && (-1 !== aArea.indexOf(area.id)) ? 'checked' : '')" (change)="sArea($event.target.value,true)"
         id="{{area.id}}" name="{{area.id}}" value="{{area.id}}" />
       <label for="{{area.id}}">
@@ -60,7 +60,7 @@
     <div class="row">
       <select class="col l3 m6 s6" id="idCidade" formControlName="idCidade" required materialize="material_select">
         <option disabled selected value="">Selecione a cidade</option>
-        <option *ngFor="let cidade of cidades" [value]="cidade.iCodCidade">{{cidade.sNomeCidade}}</option>
+        <option *ngFor="let cidade of cidades | async" [value]="cidade.iCodCidade">{{cidade.sNomeCidade}}</option>
       </select>
     </div>
 

@@ -41,7 +41,7 @@
         <select class="col l4 m4 s12" id="idEstado" formControlName="idEstado" (change)="getCidadeByIdEstado($event.target.value,true)"
           materialize="material_select">
           <option value="0" disabled selected>Selecione o estado</option>
-          <option *ngFor="let estado of estados" [value]="estado.iCodEstado">{{estado.sNomeEstado}}</option>
+          <option *ngFor="let estado of estados | async" [value]="estado.iCodEstado">{{estado.sNomeEstado}}</option>
         </select>
   
         <select class="col l4 m4 s12" id="idCidade" formControlName="idCidade" required materialize="material_select" [materializeSelectOptions]="cidades">
@@ -51,19 +51,19 @@
   
         <select class="col l4 m4 s12" id="iRegime" formControlName="iRegime" required materialize="material_select">
           <option disabled selected value="">Selecione o regime</option>
-          <option *ngFor="let regime of regimes" [value]="regime.id"> {{regime.nome}}</option>
+          <option *ngFor="let regime of regimes | async" [value]="regime.id"> {{regime.nome}}</option>
         </select>
       </div>
   
       <div class="row">
         <select class="col l6 m6 s12" id="iEsfera" formControlName="iEsfera" required materialize="material_select">
           <option disabled selected value="">Selecione a esfera</option>
-          <option *ngFor="let esfera of esferas" [value]="esfera.id">{{esfera.nome}}</option>
+          <option *ngFor="let esfera of esferas | async" [value]="esfera.id">{{esfera.nome}}</option>
         </select>
   
         <select class="col l6 m6 s12" id="iNatureza" formControlName="iNatureza" required materialize="material_select">
           <option disabled selected value="">Selecione a natureza da instituição</option>
-          <option *ngFor="let natureza of naturezas" [value]="natureza.id"> {{natureza.nome}}</option>
+          <option *ngFor="let natureza of naturezas | async" [value]="natureza.id"> {{natureza.nome}}</option>
         </select>
       </div>
 

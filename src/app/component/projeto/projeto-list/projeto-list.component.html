@@ -7,7 +7,7 @@
         <a  href="#/projeto" *ngIf="ativoprazo && !admin">Novo projeto</a>
     </p>
 
-    <table>
+    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
         <thead>
             <tr>
                 <th *ngIf="admin">Instituição</th>
@@ -18,7 +18,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let emp of pagedItems">
+            <tr *ngFor="let emp of allItems">
                 <th *ngIf="admin">{{ emp.instituicao.sProponente }}</th>
                 <th>{{ emp.sTitulo }}</th>
                 <th>{{ emp.sNoProcesso }}</th>
@@ -32,28 +32,6 @@
                     </a>
                 </th>
             </tr>
-
-            <tr *ngIf="pagedItems == null">
-                <td colspan="3">Não existe projeto cadastrado!</td>
-            </tr>
         </tbody>
-    </table>
-
-    <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
-            <li [ngClass]="{disabled:pager.currentPage === 1}">
-                <a (click)="setPage(1)">Primeiro</a>
-            </li>
-            <li [ngClass]="{disabled:pager.currentPage === 1}">
-                <a (click)="setPage(pager.currentPage - 1)">Anterior</a>
-            </li>
-            <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
-                <a (click)="setPage(page)">{{page}}</a>
-            </li>
-            <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
-                <a (click)="setPage(pager.currentPage + 1)">Próximo</a>
-            </li>
-            <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
-                <a (click)="setPage(pager.totalPages)">Último</a>
-            </li>
-        </ul>
+    </table>  
 </div>

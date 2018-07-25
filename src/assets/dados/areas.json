@@ -1,0 +1,38 @@
+[
+    {
+      "id": 1,
+      "nome": "Meio Ambiente"
+    },
+    {
+      "id": 2,
+      "nome": "Consumidor"
+    },
+    {
+      "id": 3,
+      "nome": "Defesa da Concorrencia"
+    },
+    {
+      "id": 4,
+      "nome": "Artístico"
+    },
+    {
+      "id": 5,
+      "nome": "Estético"
+    },
+    {
+      "id": 6,
+      "nome": "Histórico"
+    },
+    {
+      "id": 7,
+      "nome": "Turístico"
+    },
+    {
+      "id": 8,
+      "nome": "Paisagismo"
+    },
+    {
+      "id": 9,
+      "nome": "Direitos Difusos"
+    }
+  ]

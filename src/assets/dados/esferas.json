@@ -1,0 +1,22 @@
+[
+    {
+      "id": 1,
+      "nome": "Federal"
+    },
+    {
+      "id": 2,
+      "nome": "Estadual"
+    },
+    {
+      "id": 3,
+      "nome": "Municipal"
+    },
+    {
+      "id": 4,
+      "nome": "Organização Ambientalista"
+    },
+    {
+      "id": 5,
+      "nome": "Outros"
+    }
+  ]
