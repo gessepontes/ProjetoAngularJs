@@ -40,30 +40,29 @@ export class ProjetoListComponent {
         this.dtOptions = {
             // Use this attribute to enable the responsive extension
             responsive: true,
-            "language": {
-                "emptyTable":     "Nenhum registro encontrado",
-                "info":           "Mostrando de _START_ até _END_ de _TOTAL_ registros",
-                "infoEmpty":      "Mostrando 0 até 0 de 0 registros",
-                "infoFiltered":   "(Filtrados de _MAX_ registros)",
-                "infoPostFix":    "",
-                "thousands":      ",",
-                "lengthMenu":     "_MENU_ resultados por página",
-                "loadingRecords": "Carregando...",
-                "processing":     "Processando...",
-                "search":         "Pesquisar:",
-                "zeroRecords":    "Nenhum registro encontrado",
-                "paginate": {
-                    "first":      "Primeiro",
-                    "last":       "Último",
-                    "next":       "Próximo",
-                    "previous":   "Anterior"
+            language: {
+                emptyTable:     'Nenhum registro encontrado',
+                info:           'Mostrando de _START_ até _END_ de _TOTAL_ registros',
+                infoEmpty:      'Mostrando 0 até 0 de 0 registros',
+                infoFiltered:   '(Filtrados de _MAX_ registros)',
+                infoPostFix:    '',
+                thousands:      ',',
+                lengthMenu:     '',
+                loadingRecords: 'Carregando...',
+                processing:     'Processando...',
+                search:         'Pesquisar:',
+                zeroRecords:    'Nenhum registro encontrado',
+                paginate: {
+                    first:      'Primeiro',
+                    last:       'Último',
+                    next:       'Próximo',
+                    previous:   'Anterior'
                 },
-                "aria": {
-                    "sortAscending":  ": Ordenar colunas de forma ascendente",
-                    "sortDescending": ": Ordenar colunas de forma descendente"
+                aria: {
+                    sortAscending:  ': Ordenar colunas de forma ascendente',
+                    sortDescending: ': Ordenar colunas de forma descendente'
                 }
-            }
-            
+            }                   
         };
 
         this.user = localStorage.getItem('currentUser');
@@ -104,15 +103,15 @@ export class ProjetoListComponent {
     }
 
     delete(id: number) {
-        let ans = confirm("Você deseja excluir este projeto?");
+        let ans = confirm('Você deseja excluir este projeto?');
         if (ans) {
             this.spinner.show();
 
             this._projetoService.deleteProjeto(id).subscribe((data) => {
                 if (data == 0) {
-                    this.alertService.error("Erro ao realizar a operação!");
+                    this.alertService.error('Erro ao realizar a operação!');
                 } else {
-                    this.alertService.success("Operação realizada com sucesso!");
+                    this.alertService.success('Operação realizada com sucesso!');
                     this.getProjetoByIdInstituicao(JSON.parse(this.user).id);
                 }
             }, error => this.errorHandler(error));
@@ -131,7 +130,7 @@ export class ProjetoListComponent {
                 }
             },
             error => {
-                this.alertService.error("Erro ao realizar a operação!");
+                this.alertService.error('Erro ao realizar a operação!');
             });
     }
 
@@ -141,11 +140,11 @@ export class ProjetoListComponent {
         this.spinner.hide();
 
         if (error.status == 401) {
-            this.alertService.error("Sua sessão expirou entre novamente com seu usuário.");
+            this.alertService.error('Sua sessão expirou entre novamente com seu usuário.');
             this.authenticationService.logout();
             this._router.navigate(['/login']);
         } else {
-            this.alertService.error("Erro ao realizar a operação!");
+            this.alertService.error('Erro ao realizar a operação!');
         }
     }
 }
